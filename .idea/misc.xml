@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_attractions_home.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_base.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_user_attractions_list.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_user_attractions_list_rv.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/attraction_grid_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_user_attraction_details.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_user_attractions_list.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_usrt_attraction_details.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/user_attraction_list_row.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/menu/attractions_list_menu.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/menu/base_menu.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/menu/student_list_menu.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="15" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="15" project-jdk-type="JavaSDK" />
 </project>
