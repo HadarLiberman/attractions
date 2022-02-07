@@ -22,6 +22,7 @@ import java.util.List;
 
 public class UserAttractionListRvFragment extends Fragment {
 
+
     List<UserAttraction> data;
 
     @Nullable
