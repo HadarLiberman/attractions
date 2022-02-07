@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -43,16 +44,15 @@ public class UserAttractionListRvFragment extends Fragment {
             public void onItemClick(View v,int position) {
                 String stId = data.get(position).getAttractionId();
                 Navigation.findNavController(v).navigate(UserAttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToUserAttractionDetailsFragment2(stId));
-
             }
         });
 
-        ImageButton add = view.findViewById(R.id.userlistrv_addAttraction_btn);
+//        ImageButton add = view.findViewById(R.id.userlistrv_addAttraction_btn);
 
         //TODO new Fragment
 
 //        add.setOnClickListener(Navigation.createNavigateOnClickListener(StudentListRvFragmentDirections.actionGlobalAboutFragment()));
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         return view;
     }
 
@@ -75,6 +75,11 @@ public class UserAttractionListRvFragment extends Fragment {
                     listener.onItemClick(v,pos);
                 }
             });
+
+//            Button add = itemView.findViewById(R.id.userlistrv_addAttraction_btn);
+//            add.setOnClickListener((v)->{
+//
+//            });
         }
     }
 

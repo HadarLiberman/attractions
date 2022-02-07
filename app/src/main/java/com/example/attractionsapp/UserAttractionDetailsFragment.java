@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -35,7 +36,7 @@ public class UserAttractionDetailsFragment extends Fragment {
         categoryTv.setText(userAttraction.getCategory());
         subCategoryTv.setText(userAttraction.getSubCategory());
 
-        ImageButton backBtn = view.findViewById(R.id.details_back_btn);
+        ImageView backBtn = view.findViewById(R.id.details_back_btn);
         backBtn.setOnClickListener((v)->{
             Navigation.findNavController(v).navigateUp();
         });
