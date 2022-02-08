@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.attractionsapp.model.Model;
-import com.example.attractionsapp.model.UserAttraction;
+import com.example.attractionsapp.model.Attraction;
 
 import java.util.List;
 
 public class UserAttractionListRvActivity extends AppCompatActivity {
 
-    List<UserAttraction> data;
+    List<Attraction> data;
     MyAdapter adapter;
 
     @Override
@@ -89,9 +89,9 @@ public class UserAttractionListRvActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            UserAttraction userAttraction = data.get(position);
-            holder.titleTv.setText(userAttraction.getTitle());
-            holder.decsTv.setText(userAttraction.getDesc());
+            Attraction attraction = data.get(position);
+            holder.titleTv.setText(attraction.getTitle());
+            holder.decsTv.setText(attraction.getDesc());
         }
 
         @Override

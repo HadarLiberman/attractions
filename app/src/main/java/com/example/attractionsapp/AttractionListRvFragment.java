@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,14 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.attractionsapp.model.Model;
-import com.example.attractionsapp.model.UserAttraction;
+import com.example.attractionsapp.model.Attraction;
 
 import java.util.List;
 
-public class UserAttractionListRvFragment extends Fragment {
+public class AttractionListRvFragment extends Fragment {
 
 
-    List<UserAttraction> data;
+    List<Attraction> data;
 
     @Nullable
     @Override
@@ -43,8 +42,8 @@ public class UserAttractionListRvFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v,int position) {
-                String stId = data.get(position).getAttractionId();
-                Navigation.findNavController(v).navigate(UserAttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToUserAttractionDetailsFragment2(stId));
+                String stId = data.get(position).getId();
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToUserAttractionDetailsFragment2(stId));
             }
         });
 
@@ -105,9 +104,9 @@ public class UserAttractionListRvFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            UserAttraction userAttraction = data.get(position);
-            holder.titleTv.setText(userAttraction.getTitle());
-            holder.decsTv.setText(userAttraction.getDesc());
+            Attraction attraction = data.get(position);
+            holder.titleTv.setText(attraction.getTitle());
+            holder.decsTv.setText(attraction.getDesc());
         }
 
         @Override

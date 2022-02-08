@@ -2,9 +2,9 @@ package com.example.attractionsapp.model;
 
 import java.time.LocalDateTime;
 
-public class UserAttraction {
+public class Attraction {
     String userId;
-    String attractionId;
+    String id;
     String title;
     String desc;
     String category;
@@ -12,9 +12,9 @@ public class UserAttraction {
     String location;
     LocalDateTime date;
 
-    public UserAttraction(String userId,String attractionId, String title, String desc, String category, String subCategory, String location, LocalDateTime date) {
+    public Attraction(String userId, String id, String title, String desc, String category, String subCategory, String location, LocalDateTime date) {
         this.userId = userId;
-        this.attractionId = attractionId;
+        this.id = id;
         this.title = title;
         this.desc = desc;
         this.category = category;
@@ -23,9 +23,9 @@ public class UserAttraction {
         this.date = date;
     }
 
-    public UserAttraction(){
+    public Attraction(){
         this.userId = "";
-        this.attractionId = "";
+        this.id = "";
         this.title = "";
         this.desc = "";
         this.category = "";
@@ -34,9 +34,9 @@ public class UserAttraction {
         this.date = null;
     }
 
-    public String getAttractionId() { return attractionId; }
+    public String getId() { return id; }
 
-    public void setAttractionId(String attractionId) { this.attractionId = attractionId; }
+    public void setId(String id) { this.id = id; }
 
     public String getTitle() {
         return title;
