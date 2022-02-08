@@ -24,6 +24,7 @@ public class AttractionListRvFragment extends Fragment {
 
     List<Attraction> data;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
