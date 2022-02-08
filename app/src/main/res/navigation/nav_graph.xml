@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/userAttractionListRvFragment"
-        android:name="com.example.attractionsapp.UserAttractionListRvFragment"
+        android:name="com.example.attractionsapp.AttractionListRvFragment"
         android:label="User Attractions"
         tools:layout="@layout/fragment_user_attractions_list">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/userAttractionDetailsFragment2"
-        android:name="com.example.attractionsapp.UserAttractionDetailsFragment"
+        android:name="com.example.attractionsapp.AttractionDetailsFragment"
         android:label="fragment_usrt_attraction_details"
         tools:layout="@layout/fragment_user_attraction_details" >
         <argument
