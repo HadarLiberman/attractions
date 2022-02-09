@@ -32,6 +32,7 @@ public class AttractionListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_user_attractions_list,container,false);
+
         data = Model.instance.getAttractions();
 
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
