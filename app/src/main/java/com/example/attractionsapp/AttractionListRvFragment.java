@@ -23,6 +23,7 @@ public class AttractionListRvFragment extends Fragment {
 
 
     List<Attraction> data;
+    MyAdapter adapter;
     @Nullable
     @Override
 
@@ -33,14 +34,13 @@ public class AttractionListRvFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_attractions_list,container,false);
 
-        data = Model.instance.getAttractions();
 
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        MyAdapter adapter = new MyAdapter();
+       adapter = new MyAdapter();
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -57,7 +57,17 @@ public class AttractionListRvFragment extends Fragment {
 
 //        add.setOnClickListener(Navigation.createNavigateOnClickListener(StudentListRvFragmentDirections.actionGlobalAboutFragment()));
 //        setHasOptionsMenu(true);
+        refresh();
         return view;
+    }
+
+    private void refresh() {
+        Model.instance.getAttractions((list)->{
+            data=list;
+            adapter.notifyDataSetChanged();
+
+        });
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{

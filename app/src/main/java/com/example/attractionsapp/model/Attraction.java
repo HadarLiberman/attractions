@@ -1,20 +1,28 @@
 package com.example.attractionsapp.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Attraction {
-    String userId;
-    String id;
-    String title;
-    String desc;
-    String category;
-    String subCategory;
-    String location;
-    LocalDateTime date;
+    @PrimaryKey
+    @NonNull
+    String id="";
+    String userId="";
+    String title="";
+    String desc="";
+    String category="";
+    String subCategory="";
+    String location="";
+    String date="";
 
-    public Attraction(String userId, String id, String title, String desc, String category, String subCategory, String location, LocalDateTime date) {
-        this.userId = userId;
+    public Attraction(){}
+    public Attraction(String userId, String id, String title, String desc, String category, String subCategory, String location, String date) {
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.desc = desc;
         this.category = category;
@@ -23,16 +31,6 @@ public class Attraction {
         this.date = date;
     }
 
-    public Attraction(){
-        this.userId = "";
-        this.id = "";
-        this.title = "";
-        this.desc = "";
-        this.category = "";
-        this.subCategory = "";
-        this.location = "";
-        this.date = null;
-    }
 
     public String getId() { return id; }
 
@@ -86,11 +84,11 @@ public class Attraction {
         this.location = location;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

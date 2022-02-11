@@ -27,7 +27,7 @@ public class UserAttractionListRvActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_attractions_list_rv);
 
-        data = Model.instance.getAttractions();
+//        data = Model.instance.getAttractions();
 
         RecyclerView list = findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
@@ -44,6 +44,7 @@ public class UserAttractionListRvActivity extends AppCompatActivity {
         });
 
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView titleTv;
