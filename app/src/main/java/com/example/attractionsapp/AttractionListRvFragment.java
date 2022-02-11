@@ -1,11 +1,13 @@
 package com.example.attractionsapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +24,9 @@ import java.util.List;
 
 public class AttractionListRvFragment extends Fragment {
 
-
+    MyAdapter adapter;
     List<Attraction> data;
+    ProgressBar progressBar;
     @Nullable
     @Override
 
@@ -31,14 +34,14 @@ public class AttractionListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
-        data = Model.instance.getAttractions();
-
+        progressBar= view.findViewById(R.id.attractionlist_progressBar);
+        progressBar.setVisibility(View.GONE);
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        MyAdapter adapter = new MyAdapter();
+        adapter = new MyAdapter();
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -55,7 +58,21 @@ public class AttractionListRvFragment extends Fragment {
 
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
 //        setHasOptionsMenu(true);
+        refresh();
         return view;
+    }
+    private void refresh() {
+        progressBar.setVisibility(View.VISIBLE);
+        Model.instance.getAttractions((list)->{
+            Log.d("list---------------", list.toString());
+
+            data=list;
+            adapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
+
+
+        });
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -113,6 +130,9 @@ public class AttractionListRvFragment extends Fragment {
 
         @Override
         public int getItemCount() {
+            if(data==null){
+                return 0;
+            }
             return data.size();
         }
     }

@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.attractionsapp.model.Attraction;
@@ -35,16 +36,19 @@ public class CreateAttractionFragment extends Fragment{
     Spinner categorySpinner;
     Spinner locationSpinner;
     Button saveBtn;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_create_attraction, container, false);
-        data = Model.instance.getAttractions();
+        //data = Model.instance.getAttractions();
 
         titleEt = view.findViewById(R.id.createAttraction_title_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
+        progressBar = view.findViewById(R.id.createAttraction_progressBar);
+        progressBar.setVisibility(View.GONE);
 
         descEt.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
@@ -85,7 +89,7 @@ public class CreateAttractionFragment extends Fragment{
 
         saveBtn.setOnClickListener((v)->{
             save();
-            Navigation.findNavController(v).navigateUp();
+            //Navigation.findNavController(v).navigateUp();
         });
 
 
@@ -95,15 +99,19 @@ public class CreateAttractionFragment extends Fragment{
     }
 
     private void save(){
+        progressBar.setVisibility(View.VISIBLE);
+        saveBtn.setEnabled(false);
         String title = titleEt.getText().toString();
         String desc = descEt.getText().toString();
         String location = locationSpinner.getSelectedItem().toString();
         String category = categorySpinner.getSelectedItem().toString();
-        Date date =  Calendar.getInstance().getTime();
         String image = ""; // TODO add image
 
-        Attraction newAttraction = new Attraction("","",title,desc,category,location,date);
-        Model.instance.addAttraction(newAttraction);
+        Attraction newAttraction = new Attraction("","",title,desc,category,location);
+        Model.instance.addAttraction(newAttraction,()->{
+            Navigation.findNavController(titleEt).navigateUp();
+
+        });
 
         Log.d("TAG", "added new attraction: " + newAttraction);
     }

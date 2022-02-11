@@ -1,34 +1,46 @@
 package com.example.attractionsapp.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity
 public class Attraction {
-    String userId;
-    String id;
-    String title;
-    String desc;
-    String category;
-    String location;
-    Date date;
+    @PrimaryKey
+    @NonNull
+    String id="";
 
-    public Attraction(String userId, String id, String title, String desc, String category, String location, Date date) {
-        this.userId = userId;
+    String userId="";
+    String title="";
+    String desc="";
+    String category="";
+    String location="";
+
+
+    public Attraction(){}
+    public Attraction(String userId, String id, String title, String desc, String category, String location) {
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.desc = desc;
         this.category = category;
         this.location = location;
-        this.date = date;
+
     }
 
-    public Attraction(){
-        this.userId = "";
-        this.id = "";
-        this.title = "";
-        this.desc = "";
-        this.category = "";
-        this.location = "";
-        this.date = null;
+//    public Attraction(){
+//        this.userId = "";
+//        this.id = "";
+//        this.title = "";
+//        this.desc = "";
+//        this.category = "";
+//        this.location = "";
+//        this.date = null;
+//    }
+    public String toString(){
+        return "title : " + title + "\ndesc : " + desc + "\nid : " + id;
     }
 
     public String getId() { return id; }
@@ -75,11 +87,5 @@ public class Attraction {
         this.location = location;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }
