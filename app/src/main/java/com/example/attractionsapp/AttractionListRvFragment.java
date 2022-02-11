@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class AttractionListRvFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_user_attractions_list,container,false);
+        View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
         data = Model.instance.getAttractions();
 
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
@@ -48,11 +49,11 @@ public class AttractionListRvFragment extends Fragment {
             }
         });
 
-//        ImageButton add = view.findViewById(R.id.userlistrv_addAttraction_btn);
+        Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
 
         //TODO new Fragment
 
-//        add.setOnClickListener(Navigation.createNavigateOnClickListener(StudentListRvFragmentDirections.actionGlobalAboutFragment()));
+        add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
 //        setHasOptionsMenu(true);
         return view;
     }
@@ -98,7 +99,7 @@ public class AttractionListRvFragment extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.user_attraction_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.attraction_list_row,parent,false);
             MyViewHolder holder = new MyViewHolder(view , listener);
             return holder;
         }
