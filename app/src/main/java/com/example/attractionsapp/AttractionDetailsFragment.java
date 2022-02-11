@@ -18,7 +18,7 @@ public class AttractionDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_attraction_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
         String attractionIdId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
         Attraction attraction = Model.instance.getAttractionById(attractionIdId);
@@ -27,13 +27,11 @@ public class AttractionDetailsFragment extends Fragment {
         TextView descTv = view.findViewById(R.id.details_desc_tv);
         TextView locationTv = view.findViewById(R.id.details_location_tv);
         TextView categoryTv = view.findViewById(R.id.details_category_tv);
-        TextView subCategoryTv = view.findViewById(R.id.details_subCategory_tv);
 
         titleTv.setText(attraction.getTitle());
         descTv.setText(attraction.getDesc());
         locationTv.setText(attraction.getLocation());
         categoryTv.setText(attraction.getCategory());
-        subCategoryTv.setText(attraction.getSubCategory());
 
         ImageView backBtn = view.findViewById(R.id.details_back_btn);
         backBtn.setOnClickListener((v)->{

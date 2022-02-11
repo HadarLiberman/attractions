@@ -32,14 +32,15 @@
 
     <TextView
         android:id="@+id/details_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="102dp"
+        android:layout_height="32dp"
         android:text="Dead Sea"
         android:textColor="#88C5E3"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/details_location_btn"
-        app:layout_constraintStart_toStartOf="@+id/details_location_btn" />
+        app:layout_constraintStart_toStartOf="@+id/details_location_btn"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/details_desc_tv"
@@ -72,15 +73,6 @@
         android:text="Catrgory:"
         app:layout_constraintStart_toStartOf="@+id/details_desc_tv"
         app:layout_constraintTop_toBottomOf="@+id/details_desc_tv" />
-
-    <TextView
-        android:id="@+id/details_subCategory_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Sub Category"
-        app:layout_constraintStart_toStartOf="@+id/details_category_tv"
-        app:layout_constraintTop_toBottomOf="@+id/details_category_tv" />
 
     <TextView
         android:id="@+id/details_location_tv"
@@ -127,5 +119,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

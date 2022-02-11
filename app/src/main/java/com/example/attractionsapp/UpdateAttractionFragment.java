@@ -3,26 +3,18 @@ package com.example.attractionsapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.example.attractionsapp.model.Attraction;
-import com.example.attractionsapp.model.Model;
-
-import java.time.LocalDateTime;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddAttractionFragment#newInstance} factory method to
+ * Use the {@link UpdateAttractionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddAttractionFragment extends Fragment {
-    TextView titleTv;
+public class UpdateAttractionFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +24,7 @@ public class AddAttractionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AddAttractionFragment() {
+    public UpdateAttractionFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +34,11 @@ public class AddAttractionFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddAttractionFragment.
+     * @return A new instance of fragment UpdateAttractionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddAttractionFragment newInstance(String param1, String param2) {
-        AddAttractionFragment fragment = new AddAttractionFragment();
+    public static UpdateAttractionFragment newInstance(String param1, String param2) {
+        UpdateAttractionFragment fragment = new UpdateAttractionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,23 +59,6 @@ public class AddAttractionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //titleTv = view.findViewById(R.id.details_title_tv);
-        View view = inflater.inflate(R.layout.fragment_user_attractions_list,container,false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_update_attraction, container, false);
     }
-
-    private void save() {
-        Attraction attraction=new Attraction("1","1","ski","water ski is great","water","water sub","north","0909");
-
-        Model.instance.addAttraction(attraction,()->{
-            Navigation.findNavController(titleTv).navigateUp();
-
-        });
-
-
-//        Log.d("TAG","saved name:"+name+"saved id:"+id+"saved flag:"+flag);
-
-    }
-
 }

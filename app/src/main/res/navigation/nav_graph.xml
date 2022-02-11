@@ -9,18 +9,37 @@
         android:id="@+id/userAttractionListRvFragment"
         android:name="com.example.attractionsapp.AttractionListRvFragment"
         android:label="User Attractions"
-        tools:layout="@layout/fragment_user_attractions_list">
+        tools:layout="@layout/fragment_attractions_list_rv">
         <action
             android:id="@+id/action_userAttractionListRvFragment_to_userAttractionDetailsFragment2"
             app:destination="@id/userAttractionDetailsFragment2" />
+        <action
+            android:id="@+id/action_userAttractionListRvFragment_to_createAttractionFragment"
+            app:destination="@id/createAttractionFragment" />
     </fragment>
     <fragment
         android:id="@+id/userAttractionDetailsFragment2"
         android:name="com.example.attractionsapp.AttractionDetailsFragment"
         android:label="fragment_usrt_attraction_details"
-        tools:layout="@layout/fragment_user_attraction_details" >
+        tools:layout="@layout/fragment_attraction_details">
         <argument
             android:name="attractionId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_userAttractionDetailsFragment2_to_updateAttractionFragment"
+            app:destination="@id/updateAttractionFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/updateAttractionFragment"
+        android:name="com.example.attractionsapp.UpdateAttractionFragment"
+        android:label="fragment_update_attraction"
+        tools:layout="@layout/fragment_update_attraction" >
+        <argument android:name="attractionId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAttractionFragment"
+        android:name="com.example.attractionsapp.CreateAttractionFragment"
+        android:label="fragment_create_attraction"
+        tools:layout="@layout/fragment_create_attraction" />
 </navigation>

@@ -12,6 +12,9 @@
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_user_attractions_list.xml" value="0.22" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_user_attractions_list_rv.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/attraction_grid_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_attraction_details.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_create_attraction.xml" value="0.25" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_update_attraction.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_user_attraction_details.xml" value="0.22" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_user_attractions_list.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_usrt_attraction_details.xml" value="0.3333333333333333" />

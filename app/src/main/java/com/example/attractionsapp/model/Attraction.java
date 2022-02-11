@@ -5,6 +5,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
+
 
 @Entity
 public class Attraction {
@@ -15,21 +19,22 @@ public class Attraction {
     String title="";
     String desc="";
     String category="";
-    String subCategory="";
+
     String location="";
-    String date="";
+//    Date date="";
 
     public Attraction(){}
-    public Attraction(String userId, String id, String title, String desc, String category, String subCategory, String location, String date) {
+    public Attraction(String userId, String id, String title, String desc, String category,  String location) {
+
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.desc = desc;
         this.category = category;
-        this.subCategory = subCategory;
         this.location = location;
-        this.date = date;
+//        this.date = date;
     }
+
 
 
     public String getId() { return id; }
@@ -68,14 +73,6 @@ public class Attraction {
         this.category = category;
     }
 
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -84,11 +81,11 @@ public class Attraction {
         this.location = location;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
+//    public Date getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
 }
