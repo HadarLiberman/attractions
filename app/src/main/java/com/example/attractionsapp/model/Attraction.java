@@ -1,6 +1,6 @@
 package com.example.attractionsapp.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Attraction {
     String userId;
@@ -8,17 +8,15 @@ public class Attraction {
     String title;
     String desc;
     String category;
-    String subCategory;
     String location;
-    LocalDateTime date;
+    Date date;
 
-    public Attraction(String userId, String id, String title, String desc, String category, String subCategory, String location, LocalDateTime date) {
+    public Attraction(String userId, String id, String title, String desc, String category, String location, Date date) {
         this.userId = userId;
         this.id = id;
         this.title = title;
         this.desc = desc;
         this.category = category;
-        this.subCategory = subCategory;
         this.location = location;
         this.date = date;
     }
@@ -29,7 +27,6 @@ public class Attraction {
         this.title = "";
         this.desc = "";
         this.category = "";
-        this.subCategory = "";
         this.location = "";
         this.date = null;
     }
@@ -70,14 +67,6 @@ public class Attraction {
         this.category = category;
     }
 
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -86,11 +75,11 @@ public class Attraction {
         this.location = location;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

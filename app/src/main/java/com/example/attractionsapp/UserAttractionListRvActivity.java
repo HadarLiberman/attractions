@@ -82,7 +82,7 @@ public class UserAttractionListRvActivity extends AppCompatActivity {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.user_attraction_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.attraction_list_row,parent,false);
             MyViewHolder holder = new MyViewHolder(view , listener);
             return holder;
         }
