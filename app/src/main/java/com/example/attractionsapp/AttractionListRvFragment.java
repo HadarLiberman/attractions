@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
@@ -26,7 +27,7 @@ public class AttractionListRvFragment extends Fragment {
 
     MyAdapter adapter;
     List<Attraction> data;
-    ProgressBar progressBar;
+    SwipeRefreshLayout swipeRefresh;
     @Nullable
     @Override
 
@@ -34,8 +35,8 @@ public class AttractionListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
-        progressBar= view.findViewById(R.id.attractionlist_progressBar);
-        progressBar.setVisibility(View.GONE);
+        swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
+        swipeRefresh.setOnRefreshListener(()->refresh());
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
 
@@ -62,13 +63,14 @@ public class AttractionListRvFragment extends Fragment {
         return view;
     }
     private void refresh() {
-        progressBar.setVisibility(View.VISIBLE);
+        swipeRefresh.setRefreshing(true);
         Model.instance.getAttractions((list)->{
             Log.d("list---------------", list.toString());
 
             data=list;
             adapter.notifyDataSetChanged();
-            progressBar.setVisibility(View.GONE);
+            swipeRefresh.setRefreshing(false);
+
 
 
         });

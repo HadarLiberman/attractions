@@ -14,24 +14,36 @@ import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
 public class AttractionDetailsFragment extends Fragment {
+    TextView titleTv;
+    TextView descTv;
+    TextView locationTv;
+    TextView categoryTv;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
+
         String attractionIdId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
-        Attraction attraction = Model.instance.getAttractionById(attractionIdId);
+        Model.instance.getAttractionById(attractionIdId, new Model.GetAttractionById() {
+            @Override
+            public void onComplete(Attraction attraction) {
+                titleTv.setText(attraction.getTitle());
+                descTv.setText(attraction.getDesc());
+                locationTv.setText(attraction.getLocation());
+                categoryTv.setText(attraction.getCategory());
+            }
+        });
 
-        TextView titleTv = view.findViewById(R.id.details_title_tv);
-        TextView descTv = view.findViewById(R.id.details_desc_tv);
-        TextView locationTv = view.findViewById(R.id.details_location_tv);
-        TextView categoryTv = view.findViewById(R.id.details_category_tv);
+        titleTv = view.findViewById(R.id.details_title_tv);
+        descTv = view.findViewById(R.id.details_desc_tv);
+        locationTv = view.findViewById(R.id.details_location_tv);
+        categoryTv = view.findViewById(R.id.details_category_tv);
 
-        titleTv.setText(attraction.getTitle());
-        descTv.setText(attraction.getDesc());
-        locationTv.setText(attraction.getLocation());
-        categoryTv.setText(attraction.getCategory());
+
 
         ImageView backBtn = view.findViewById(R.id.details_back_btn);
         backBtn.setOnClickListener((v)->{

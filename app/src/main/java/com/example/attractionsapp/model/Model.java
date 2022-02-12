@@ -18,7 +18,7 @@ public class Model {
     public static final Model instance = new Model();
     ExecutorService executor = Executors.newFixedThreadPool(1);
     Handler mainThread= HandlerCompat.createAsync(Looper.getMainLooper());
-
+    ModelFirebase modelFirebase=new ModelFirebase();
 //    private Model(){
 //        for(int i=0; i<5;i++){
 //            Attraction attraction = new Attraction("A3"+i,"i","Dead Sea","The geological wonder of the Dead Sea is one of the must-do tourist attractions in the Middle East."
@@ -43,19 +43,19 @@ public class Model {
     }
 
     public void getAttractions(GetAttractionsListener listener){
-
-        executor.execute(()->{
-//            try{
-//                Thread.sleep(3000);
-//            } catch(InterruptedException e){
-//                e.printStackTrace();
-//            }
-            List<Attraction> list= AppLocalDb.db.attractionDao().getAll();
-            mainThread.post(()->{
-                listener.onComplete(list);
-
-            });
-        });
+modelFirebase.getAttractions(listener);
+//        executor.execute(()->{
+////            try{
+////                Thread.sleep(3000);
+////            } catch(InterruptedException e){
+////                e.printStackTrace();
+////            }
+//            List<Attraction> list= AppLocalDb.db.attractionDao().getAll();
+//            mainThread.post(()->{
+//                listener.onComplete(list);
+//
+//            });
+//        });
 
     }
 
@@ -64,31 +64,39 @@ public class Model {
         void onComplete();
     }
     public void addAttraction(Attraction attraction, AddAttractionListener listener){
-        executor.execute(()->{
+      modelFirebase.addAttraction(attraction,listener);
+//        executor.execute(()->{
 //            try{
 //                Thread.sleep(3000);
 //            } catch(InterruptedException e){
 //                e.printStackTrace();
 //            }
           //Attraction second=new Attraction("1","1","hiii","iii","wer","wer");
-            AppLocalDb.db.attractionDao().insertAll(attraction); ;
-            mainThread.post(()->{
-                Log.d("TAG", "added new attraction");
-                listener.onComplete();
-
-            });
-        });
+//            AppLocalDb.db.attractionDao().insertAll(attraction); ;
+//            mainThread.post(()->{
+//                Log.d("TAG", "added new attraction");
+//                listener.onComplete();
+//
+//            });
+//        });
 
     }
 
-    public Attraction getAttractionById(String attractionId) {
-        for (Attraction s:data
-        ) {
-            if (s.getId().equals(attractionId)){
-                return s;
-            }
-        }
+    public interface  GetAttractionById{
+        void  onComplete(Attraction attraction);
+    }
+
+    public Attraction getAttractionById(String attractionId, GetAttractionById listener) {
+        modelFirebase.getAttractionById(attractionId,listener);
         return null;
     }
+//        for (Attraction s:data
+//        ) {
+//            if (s.getId().equals(attractionId)){
+//                return s;
+//            }
+//        }
+//        return null;
+//    }
 
 }

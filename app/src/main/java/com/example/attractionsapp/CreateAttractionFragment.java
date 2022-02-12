@@ -107,7 +107,7 @@ public class CreateAttractionFragment extends Fragment{
         String category = categorySpinner.getSelectedItem().toString();
         String image = ""; // TODO add image
 
-        Attraction newAttraction = new Attraction("","",title,desc,category,location);
+        Attraction newAttraction = new Attraction("7",title,desc,category,location);
         Model.instance.addAttraction(newAttraction,()->{
             Navigation.findNavController(titleEt).navigateUp();
 
