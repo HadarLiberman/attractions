@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/userAttractionListRvFragment">
+    app:startDestination="@id/attractionListRvFragment">
 
     <fragment
-        android:id="@+id/userAttractionListRvFragment"
+        android:id="@+id/attractionListRvFragment"
         android:name="com.example.attractionsapp.AttractionListRvFragment"
         android:label="User Attractions"
         tools:layout="@layout/fragment_attractions_list_rv">
         <action
-            android:id="@+id/action_userAttractionListRvFragment_to_userAttractionDetailsFragment2"
-            app:destination="@id/userAttractionDetailsFragment2" />
+            android:id="@+id/action_userAttractionListRvFragment_to_attractionDetailsFragment"
+            app:destination="@id/attractionDetailsFragment" />
         <action
             android:id="@+id/action_userAttractionListRvFragment_to_createAttractionFragment"
             app:destination="@id/createAttractionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/userAttractionDetailsFragment2"
+        android:id="@+id/attractionDetailsFragment"
         android:name="com.example.attractionsapp.AttractionDetailsFragment"
         android:label="fragment_usrt_attraction_details"
         tools:layout="@layout/fragment_attraction_details">
