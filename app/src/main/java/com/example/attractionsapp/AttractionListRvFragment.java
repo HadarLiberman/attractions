@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,16 +46,14 @@ public class AttractionListRvFragment extends Fragment {
             @Override
             public void onItemClick(View v,int position) {
                 String stId = data.get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToUserAttractionDetailsFragment2(stId));
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId));
             }
         });
 
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
-
-        //TODO new Fragment
-
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
-//        setHasOptionsMenu(true);
+
+        //  setHasOptionsMenu(true);
         return view;
     }
 
@@ -62,6 +61,7 @@ public class AttractionListRvFragment extends Fragment {
         TextView titleTv;
         TextView decsTv;
         ImageButton editBtn;
+        ImageView imagev;
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
@@ -69,6 +69,7 @@ public class AttractionListRvFragment extends Fragment {
             titleTv = itemView.findViewById(R.id.details_title_tv);
             decsTv = itemView.findViewById(R.id.details_desc_tv);
             editBtn = itemView.findViewById(R.id.details_edit_btn);
+            imagev = itemView.findViewById(R.id.details_image_imv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,6 +110,11 @@ public class AttractionListRvFragment extends Fragment {
             Attraction attraction = data.get(position);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
+            if(attraction.getUri() != null){
+                holder.imagev.setImageURI(attraction.getUri());
+            }else if(attraction.getBitmap() != null){
+                holder.imagev.setImageBitmap(attraction.getBitmap());
+            }
         }
 
         @Override

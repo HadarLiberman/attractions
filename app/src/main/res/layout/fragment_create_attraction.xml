@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAttractionFragment"
+    android:background="#C7E9ED"
     android:clickable="true"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    tools:context=".CreateAttractionFragment">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="Title"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -37,9 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:focusableInTouchMode="true"
         android:focusedByDefault="false"
+        android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +72,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="Category"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -82,7 +83,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="Location"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -91,20 +92,21 @@
 
     <Spinner
         android:id="@+id/createAttraction_category_spinner"
-        android:layout_width="198dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="97dp"
         android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/createAttraction_description_edt"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <Spinner
         android:id="@+id/createAttraction_location_spinner"
-        android:layout_width="198dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="@+id/createAttraction_category_spinner"
         app:layout_constraintStart_toStartOf="@+id/createAttraction_category_spinner"
         app:layout_constraintTop_toTopOf="@+id/textView6" />
 
@@ -113,12 +115,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.08" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/create_save_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:background="#C7E9ED"
+            android:backgroundTintMode="multiply"
+            android:hapticFeedbackEnabled="false"
+            app:srcCompat="@drawable/upload_img" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/create_save_btn"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:text="save"
         app:layout_constraintBottom_toBottomOf="parent"
