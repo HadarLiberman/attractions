@@ -9,6 +9,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +27,8 @@ public class Attraction {
     final public static String DESC = "desc";
     final public static String CATEGORY = "category";
     final public static String LOCATION = "location";
+    final public static String UPDATEDATE = "updatedate";
+
     final public static String URI = "uri";
     final public static String BITMAP = "bitmap";
 
@@ -37,6 +42,12 @@ public class Attraction {
     String desc = "";
     String category = "";
     String location = "";
+
+    public void setUpdateDate(Long updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    Long updateDate=new Long(0);
     //Uri uri = null;
     //Bitmap bitmap = null;
 
@@ -135,6 +146,8 @@ public class Attraction {
         json.put(DESC, desc);
         json.put(CATEGORY, category);
         json.put(LOCATION, location);
+        json.put(UPDATEDATE, FieldValue.serverTimestamp());
+
         //json.put(URI, uri);
         //json.put(BITMAP, bitmap);
         return json;
@@ -147,11 +160,19 @@ public class Attraction {
         String desc = (String) json.get(DESC);
         String category = (String) json.get(CATEGORY);
         String location = (String) json.get(LOCATION);
+        Timestamp ts = (Timestamp) json.get(UPDATEDATE);
+        Long updateDate =ts.getSeconds();
+
         //Uri uri = (Uri) json.get(URI);
        // Bitmap bitmap = (Bitmap) json.get(BITMAP);
 
         Attraction attraction = new Attraction(userId, title, desc, category, location);
+        attraction.setUpdateDate(updateDate);
         return attraction;
+    }
+
+    public Long getUpdateDate() {
+        return updateDate;
     }
 }
 

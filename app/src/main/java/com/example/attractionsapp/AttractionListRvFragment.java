@@ -1,5 +1,6 @@
 package com.example.attractionsapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,10 +30,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class AttractionListRvFragment extends Fragment {
-
+    AttractionListRvViewModel viewModel;
     MyAdapter adapter;
-    List<Attraction> data;
     SwipeRefreshLayout swipeRefresh;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewModel=new ViewModelProvider(this).get(AttractionListRvViewModel.class);
+    }
 
     @Nullable
     @Override
@@ -38,7 +46,7 @@ public class AttractionListRvFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
         swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
-        swipeRefresh.setOnRefreshListener(()->refresh());
+        swipeRefresh.setOnRefreshListener(()->Model.instance.refreshAttractionList());
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
 
@@ -51,27 +59,36 @@ public class AttractionListRvFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v,int position) {
-                String stId = data.get(position).getId();
+                String stId = viewModel.getData().getValue().get(position).getId();
                 Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId.toString()));
             }
         });
 
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
+        viewModel.getData().observe(getViewLifecycleOwner(),list1->refresh());
+        swipeRefresh.setRefreshing(Model.instance.getAttrationListLoadingStage().getValue()==Model.AttrationListLoadingStage.loading);
+        Model.instance.getAttrationListLoadingStage().observe(getViewLifecycleOwner(), attrationListLoadingStage -> {
+         if (attrationListLoadingStage==Model.AttrationListLoadingStage.loading){
+            swipeRefresh.setRefreshing(true);
 
-        refresh();
-
-        return view;
-    }
-    private void refresh() {
-        swipeRefresh.setRefreshing(true);
-        Model.instance.getAttractions((list)->{
-            Log.d("list---------------", list.toString());
-            data=list;
-            adapter.notifyDataSetChanged();
+         }else{
             swipeRefresh.setRefreshing(false);
+         }
 
         });
+        return view;
+    }
+    public void refresh() {
+        adapter.notifyDataSetChanged();
+        swipeRefresh.setRefreshing(false);
+//        Model.instance.getAttractions((list)->{
+//            Log.d("list---------------", list.toString());
+//            viewModel.setData(list);
+//            adapter.notifyDataSetChanged();
+//            swipeRefresh.setRefreshing(false);
+//
+//        });
 
     }
 
@@ -125,7 +142,7 @@ public class AttractionListRvFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            Attraction attraction = data.get(position);
+            Attraction attraction = viewModel.getData().getValue().get(position);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
 //            if(attraction.getUri() != null){
@@ -137,10 +154,10 @@ public class AttractionListRvFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            if(data==null){
+            if(viewModel.getData().getValue()==null){
                 return 0;
             }
-            return data.size();
+            return viewModel.getData().getValue().size();
         }
     }
 

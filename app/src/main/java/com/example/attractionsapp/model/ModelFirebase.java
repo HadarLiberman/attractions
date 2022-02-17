@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,8 +23,14 @@ import java.util.UUID;
 
 public class ModelFirebase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public void getAttractions(Model.GetAttractionsListener listener) {
+
+
+    public interface GetAttractionsListener{
+        void onComplete(List<Attraction> list);
+    }
+    public void getAttractions(Long lastUpdateDate, GetAttractionsListener listener) {
      db.collection(Attraction.COLLECTION_NAME)
+             .whereGreaterThanOrEqualTo("updateDate",new Timestamp(lastUpdateDate,0))
              .get()
              .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                  @Override
