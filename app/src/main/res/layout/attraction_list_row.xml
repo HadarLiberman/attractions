@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="#E2EFF1"
     android:clickable="true">
 
     <!--    android:background="#E5F0F2"-->
@@ -49,16 +49,4 @@
         app:layout_constraintStart_toStartOf="@+id/details_image_imv"
         app:layout_constraintTop_toBottomOf="@+id/details_image_imv" />
 
-    <ImageButton
-        android:id="@+id/details_edit_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="#484C8288"
-        android:focusable="false"
-        android:scaleType="centerCrop"
-        android:src="@drawable/edit_btn"
-        app:layout_constraintBottom_toTopOf="@+id/details_image_imv"
-        app:layout_constraintEnd_toEndOf="@+id/details_image_imv"
-        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

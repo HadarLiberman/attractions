@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E2EFF1"
     tools:context=".AttractionDetailsFragment">
 
     <TextView
@@ -66,13 +67,26 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
+        android:id="@+id/details_category_tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Catrgory:"
+        android:textColor="#88C5E3"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/details_image_imv"
+        app:layout_constraintTop_toBottomOf="@+id/details_image_imv" />
+
+    <TextView
         android:id="@+id/details_category_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Catrgory:"
-        app:layout_constraintStart_toStartOf="@+id/details_desc_tv"
-        app:layout_constraintTop_toBottomOf="@+id/details_desc_tv" />
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:text="Trips"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/details_category_tv_label"
+        app:layout_constraintTop_toBottomOf="@+id/details_image_imv" />
 
     <TextView
         android:id="@+id/details_location_tv"
@@ -104,10 +118,10 @@
         android:id="@+id/details_date_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="8dp"
         android:text="12/01/2022"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/details_image_imv"
+        app:layout_constraintEnd_toEndOf="@+id/details_image_imv"
         app:layout_constraintTop_toBottomOf="@+id/details_image_imv" />
 
     <ImageView

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C7E9ED"
+    android:background="#C6E3E6"
     android:clickable="true"
     android:focusableInTouchMode="true"
     tools:context=".CreateAttractionFragment">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/newAccount_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -29,11 +29,11 @@
         android:text="Description"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/newAccount_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/newAccount_name_tv" />
 
     <EditText
-        android:id="@+id/createAttraction_title_edt"
+        android:id="@+id/newAccount_name_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -42,9 +42,9 @@
         android:focusedByDefault="false"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/newAccount_name_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -134,7 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:background="#C7E9ED"
+            android:background="#C6E3E6"
             android:backgroundTintMode="multiply"
             android:hapticFeedbackEnabled="false"
             app:srcCompat="@drawable/upload_img" />
@@ -146,6 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
+        android:backgroundTint="#F1D3D0"
         android:text="save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

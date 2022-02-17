@@ -85,7 +85,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         View view = inflater.inflate(R.layout.fragment_create_attraction, container, false);
         //data = Model.instance.getAttractions();
 
-        titleEt = view.findViewById(R.id.createAttraction_title_edt);
+        titleEt = view.findViewById(R.id.newAccount_name_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
 
 
@@ -114,8 +114,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             }
         });
 
-
-
         // create category spinner
         final List<String> category=new ArrayList<String>();
         category.add("");
@@ -130,8 +128,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(dataAdapter_category);
 
-
-
         // create location spinner
         final List<String> location =new ArrayList<String>();
         location.add("");
@@ -142,7 +138,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         ArrayAdapter<String> dataAdapter_location = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, location);
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(dataAdapter_location);
-
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
@@ -158,7 +153,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             }
 
         });
-
 
         return view;
     }

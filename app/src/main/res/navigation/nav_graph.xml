@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_userAttractionListRvFragment_to_createAttractionFragment"
             app:destination="@id/createAttractionFragment" />
+        <action
+            android:id="@+id/action_attractionListRvFragment_to_updateAttractionFragment"
+            app:destination="@id/updateAttractionFragment" />
     </fragment>
     <fragment
         android:id="@+id/attractionDetailsFragment"
@@ -42,4 +45,14 @@
         android:name="com.example.attractionsapp.CreateAttractionFragment"
         android:label="fragment_create_attraction"
         tools:layout="@layout/fragment_create_attraction" />
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.example.attractionsapp.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" />
+    <fragment
+        android:id="@+id/newAccountFragment"
+        android:name="com.example.attractionsapp.NewAccountFragment"
+        android:label="fragment_new_account"
+        tools:layout="@layout/fragment_new_account" />
 </navigation>

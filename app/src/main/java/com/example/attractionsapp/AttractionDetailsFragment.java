@@ -1,26 +1,38 @@
 package com.example.attractionsapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.util.UUID;
+
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.attractionsapp.Util.DeleteAttractionDialog;
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
-import java.util.UUID;
 
-public class AttractionDetailsFragment extends Fragment {
+public class AttractionDetailsFragment extends Fragment implements DeleteAttractionDialog.OnSelectedListener {
+
+    private static final String TAG = "AttractionDetailsFragment";
+    boolean deleteAnswer;
+    String attractionId;
+
     TextView titleTv;
     TextView descTv;
     TextView locationTv;
     TextView categoryTv;
     ImageView backBtn;
+    ImageView editBtn;
+    ImageView deleteBtn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +62,36 @@ public class AttractionDetailsFragment extends Fragment {
         backBtn.setOnClickListener((v)->{
             Navigation.findNavController(v).navigateUp();
         });
+
+        editBtn = view.findViewById(R.id.details_edit_btn);
+        editBtn.setOnClickListener((v)->{
+            Navigation.findNavController(v).navigate(AttractionDetailsFragmentDirections.actionUserAttractionDetailsFragment2ToUpdateAttractionFragment(attractionId));
+        });
+
+        deleteBtn = view.findViewById(R.id.details_delete_btn);
+        deleteBtn.setOnClickListener((v)->{
+            DeleteAttractionDialog dialog = new DeleteAttractionDialog();
+            dialog.show(getParentFragmentManager(), "DeleteAttraction");
+            dialog.setTargetFragment(AttractionDetailsFragment.this, 1);
+            if(deleteAnswer){
+//                deleteAttraction(attractionId);
+                Navigation.findNavController(v).navigateUp();
+            }
+        });
+
+
         return view;
+    }
+
+    private void deleteAttraction(String id){
+        Model.instance.deleteAttractionbyId(id);
+    }
+
+
+    @SuppressLint("LongLogTag")
+    @Override
+    public void getAnswer(boolean answer) {
+        Log.d(TAG, "getAnswer: " +answer);
+        this.deleteAnswer = answer;
     }
 }

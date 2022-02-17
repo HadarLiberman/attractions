@@ -1,5 +1,7 @@
 package com.example.attractionsapp.model;
 
+import android.net.Uri;
+
 
 import android.content.Context;
 import android.os.Handler;
@@ -45,7 +47,7 @@ public class Model {
     }
 
     private Model(){
-        attrationListLoadingStage.setValue(AttrationListLoadingStage.loaded);
+         attrationListLoadingStage.setValue(AttrationListLoadingStage.loaded);
     }
 
 //    private Model(){
@@ -171,5 +173,9 @@ public class Model {
 //        }
 //        return null;
 //    }
+
+    public void deleteAttractionbyId(String attractionId){
+        data.remove(attractionId);
+    }
 
 }
