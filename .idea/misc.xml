@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_attraction_details.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_attractions_list_rv.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/attractions/app/src/main/res/layout/fragment_create_attraction.xml" value="0.18125" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_attractions_home.xml" value="0.22" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/layout/activity_base.xml" value="0.1743659420289855" />
@@ -29,5 +32,9 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="12" project-jdk-type="JavaSDK" />
+=======
   <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="15" project-jdk-type="JavaSDK" />
+>>>>>>> a94d3fa2fdb94c8ccc569eb3250cf9e831397726
 </project>

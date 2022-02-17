@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.util.UUID;
+
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -16,11 +18,21 @@ import com.example.attractionsapp.Util.DeleteAttractionDialog;
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
+
 public class AttractionDetailsFragment extends Fragment implements DeleteAttractionDialog.OnSelectedListener {
 
     private static final String TAG = "AttractionDetailsFragment";
     boolean deleteAnswer;
     String attractionId;
+
+    TextView titleTv;
+    TextView descTv;
+    TextView locationTv;
+    TextView categoryTv;
+    ImageView backBtn;
+    ImageView editBtn;
+    ImageView deleteBtn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,33 +40,35 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
-        attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
-        Attraction attraction = Model.instance.getAttractionById(attractionId);
 
-        TextView titleTv = view.findViewById(R.id.details_title_tv);
-        TextView descTv = view.findViewById(R.id.details_desc_tv);
-        TextView locationTv = view.findViewById(R.id.details_location_tv);
-        TextView categoryTv = view.findViewById(R.id.details_category_tv);
-        ImageView imageView = view.findViewById(R.id.details_image_imv);
+        String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+        Model.instance.getAttractionById(attractionId, new Model.GetAttractionById() {
+            @Override
+            public void onComplete(Attraction attraction) {
+                titleTv.setText(attraction.getTitle());
+                descTv.setText(attraction.getDesc());
+                locationTv.setText(attraction.getLocation());
+                categoryTv.setText(attraction.getCategory());
+            }
+        });
 
+        // Find the view components by Id
+        titleTv = view.findViewById(R.id.details_title_tv);
+        descTv = view.findViewById(R.id.details_desc_tv);
+        locationTv = view.findViewById(R.id.details_location_tv);
+        categoryTv = view.findViewById(R.id.details_category_tv);
+        backBtn = view.findViewById(R.id.details_back_btn);
 
-        titleTv.setText(attraction.getTitle());
-        descTv.setText(attraction.getDesc());
-        locationTv.setText(attraction.getLocation());
-        categoryTv.setText(attraction.getCategory());
-        imageView.setImageURI(attraction.getUri());
-
-        ImageView backBtn = view.findViewById(R.id.details_back_btn);
         backBtn.setOnClickListener((v)->{
             Navigation.findNavController(v).navigateUp();
         });
 
-        ImageView editBtn = view.findViewById(R.id.details_edit_btn);
+        editBtn = view.findViewById(R.id.details_edit_btn);
         editBtn.setOnClickListener((v)->{
             Navigation.findNavController(v).navigate(AttractionDetailsFragmentDirections.actionUserAttractionDetailsFragment2ToUpdateAttractionFragment(attractionId));
         });
 
-        ImageView deleteBtn = view.findViewById(R.id.details_delete_btn);
+        deleteBtn = view.findViewById(R.id.details_delete_btn);
         deleteBtn.setOnClickListener((v)->{
             DeleteAttractionDialog dialog = new DeleteAttractionDialog();
             dialog.show(getParentFragmentManager(), "DeleteAttraction");

@@ -1,59 +1,100 @@
 package com.example.attractionsapp;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import android.widget.ImageButton;
+
 import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AttractionListRvFragment extends Fragment {
+    AttractionListRvViewModel viewModel;
+    MyAdapter adapter;
+    SwipeRefreshLayout swipeRefresh;
 
-
-    List<Attraction> data;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewModel=new ViewModelProvider(this).get(AttractionListRvViewModel.class);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
-        data = Model.instance.getAttractions();
-
+        swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
+        swipeRefresh.setOnRefreshListener(()->Model.instance.refreshAttractionList());
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        MyAdapter adapter = new MyAdapter();
-        adapter.notifyDataSetChanged();
+
+//         MyAdapter adapter = new MyAdapter();
+//         adapter.notifyDataSetChanged();
+
+        adapter = new MyAdapter();
         list.setAdapter(adapter);
+
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v,int position) {
-                String stId = data.get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId));
+                String stId = viewModel.getData().getValue().get(position).getId();
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId.toString()));
             }
         });
 
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
+        viewModel.getData().observe(getViewLifecycleOwner(),list1->refresh());
+        swipeRefresh.setRefreshing(Model.instance.getAttrationListLoadingStage().getValue()==Model.AttrationListLoadingStage.loading);
+        Model.instance.getAttrationListLoadingStage().observe(getViewLifecycleOwner(), attrationListLoadingStage -> {
+         if (attrationListLoadingStage==Model.AttrationListLoadingStage.loading){
+            swipeRefresh.setRefreshing(true);
 
-        //  setHasOptionsMenu(true);
+         }else{
+            swipeRefresh.setRefreshing(false);
+         }
+
+        });
         return view;
+    }
+    public void refresh() {
+        adapter.notifyDataSetChanged();
+        swipeRefresh.setRefreshing(false);
+//        Model.instance.getAttractions((list)->{
+//            Log.d("list---------------", list.toString());
+//            viewModel.setData(list);
+//            adapter.notifyDataSetChanged();
+//            swipeRefresh.setRefreshing(false);
+//
+//        });
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -100,19 +141,22 @@ public class AttractionListRvFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            Attraction attraction = data.get(position);
+            Attraction attraction = viewModel.getData().getValue().get(position);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
-            if(attraction.getUri() != null){
-                holder.imagev.setImageURI(attraction.getUri());
-            }else if(attraction.getBitmap() != null){
-                holder.imagev.setImageBitmap(attraction.getBitmap());
-            }
+//            if(attraction.getUri() != null){
+//                holder.imagev.setImageURI(attraction.getUri());
+//            }else if(attraction.getBitmap() != null){
+//                holder.imagev.setImageBitmap(attraction.getBitmap());
+//            }
         }
 
         @Override
         public int getItemCount() {
-            return data.size();
+            if(viewModel.getData().getValue()==null){
+                return 0;
+            }
+            return viewModel.getData().getValue().size();
         }
     }
 
