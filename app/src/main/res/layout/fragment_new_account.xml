@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C6E3E6"
+    tools:context=".NewAccountFragment">
+
+    <EditText
+        android:id="@+id/newAccount_email_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:focusedByDefault="false"
+        android:inputType="textPersonName"
+        android:textColor="#594D4D"
+        android:textColorHint="#594D4D"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newAccount_name_tv2"
+        app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv2"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/newAccount_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:text="Name:"
+        android:textColor="#594D4D"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/newAccount_name_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:text="Email:"
+        android:textColor="#594D4D"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/newAccount_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/newAccount_name_edt" />
+
+    <TextView
+        android:id="@+id/newAccount_name_tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:text="Password:"
+        android:textColor="#594D4D"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/newAccount_name_tv2"
+        app:layout_constraintTop_toBottomOf="@+id/newAccount_email_edt" />
+
+    <EditText
+        android:id="@+id/newAccount_name_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:focusedByDefault="false"
+        android:inputType="textPersonName"
+        android:textColor="#594D4D"
+        android:textColorHint="#594D4D"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newAccount_name_tv"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/newAccount_password_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusableInTouchMode="true"
+        android:focusedByDefault="false"
+        android:inputType="textPersonName"
+        android:textColor="#594D4D"
+        android:textColorHint="#594D4D"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/newAccount_email_edt"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="@+id/newAccount_email_edt"
+        app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv3"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+
+    <Button
+        android:id="@+id/create_save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#F1D3D0"
+        android:text="save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,5 +1,7 @@
 package com.example.attractionsapp.model;
 
+import android.net.Uri;
+
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +12,9 @@ public class Model {
 
     private Model(){
         for(int i=0; i<5;i++){
+            Uri uri = Uri.parse("android.resource://com.example.attractionsapp/drawable/south");
             Attraction attraction = new Attraction("A3"+i,"i","Dead Sea","The geological wonder of the Dead Sea is one of the must-do tourist attractions in the Middle East."
-                    ,"Trips","South", Calendar.getInstance().getTime(),null,null);
+                    ,"Trips","South", Calendar.getInstance().getTime(),uri ,null);
             data.add(attraction);
         }
 
@@ -35,6 +38,10 @@ public class Model {
             }
         }
         return null;
+    }
+
+    public void deleteAttractionbyId(String attractionId){
+        data.remove(attractionId);
     }
 
 }

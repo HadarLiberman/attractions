@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#48B8E4EA"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#48B8E4EA"
+        android:backgroundTintMode="multiply"
+        android:text="Are you sure you want to delete the Attraction?"
+        android:textAlignment="center"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/delete_cancelbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/label"
+        android:layout_alignStart="@+id/label"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#A7E6B5"
+        android:backgroundTintMode="src_in"
+        android:text="Cancel"
+        android:textAlignment="center"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/delete_deletebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/label"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#C6FB4E4E"
+        android:backgroundTintMode="src_in"
+        android:text="Delete"
+        android:textAlignment="center"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>

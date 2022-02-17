@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,8 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
+import com.example.attractionsapp.model.Model;
 
 import java.util.List;
 
@@ -39,6 +38,7 @@ public class AttractionListRvFragment extends Fragment {
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
         MyAdapter adapter = new MyAdapter();
+        adapter.notifyDataSetChanged();
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -59,7 +59,6 @@ public class AttractionListRvFragment extends Fragment {
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView titleTv;
         TextView decsTv;
-        ImageButton editBtn;
         ImageView imagev;
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
@@ -67,7 +66,6 @@ public class AttractionListRvFragment extends Fragment {
             //Update values for the new row
             titleTv = itemView.findViewById(R.id.details_title_tv);
             decsTv = itemView.findViewById(R.id.details_desc_tv);
-            editBtn = itemView.findViewById(R.id.details_edit_btn);
             imagev = itemView.findViewById(R.id.details_image_imv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +76,6 @@ public class AttractionListRvFragment extends Fragment {
                 }
             });
 
-//            Button add = itemView.findViewById(R.id.userlistrv_addAttraction_btn);
-//            add.setOnClickListener((v)->{
-//
-//            });
         }
     }
 
