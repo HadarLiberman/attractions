@@ -14,7 +14,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+
+import android.widget.ProgressBar;
+
 import android.widget.ImageView;
+
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -65,6 +69,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     Spinner categorySpinner;
     Spinner locationSpinner;
     Button saveBtn;
+
     ImageView uploadPhoto;
 
     //vars
@@ -78,14 +83,17 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_create_attraction, container, false);
-        data = Model.instance.getAttractions();
+        //data = Model.instance.getAttractions();
 
         titleEt = view.findViewById(R.id.createAttraction_title_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
+
+
         uploadPhoto = view.findViewById(R.id.post_image);
         categorySpinner = view.findViewById(R.id.createAttraction_category_spinner);
         locationSpinner = view.findViewById(R.id.createAttraction_location_spinner);
         saveBtn = view.findViewById(R.id.create_save_btn);
+
 
         // hide keyboard
         descEt.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -141,11 +149,14 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         init();
 
         saveBtn.setOnClickListener((v)->{
+
+            save();
             isHasValues();
             if (hasValues){
                 save();
                 Navigation.findNavController(v).navigateUp();
             }
+
         });
 
 
@@ -156,22 +167,30 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     @SuppressLint("LongLogTag")
     private void save(){
 
+
         Log.d(TAG, "onClick: attempting to post...");
+
 
         String title = titleEt.getText().toString();
         String desc = descEt.getText().toString();
         String location = locationSpinner.getSelectedItem().toString();
         String category = categorySpinner.getSelectedItem().toString();
-        Date date =  Calendar.getInstance().getTime();
 
+        String image = ""; // TODO add image
         Attraction newAttraction;
-
         if(uri != null){
-            newAttraction = new Attraction("","",title,desc,category,location,date,uri,null);
+            newAttraction = new Attraction("7",title,desc,category,location);
         } else{
-            newAttraction = new Attraction("","",title,desc,category,location,date, null,bitmap);
+            newAttraction = new Attraction("7",title,desc,category,location);
         }
-        Model.instance.addAttraction(newAttraction);
+
+
+        Model.instance.addAttraction(newAttraction,()->{
+            Navigation.findNavController(titleEt).navigateUp();
+
+        });
+
+
 
         Log.d("TAG", "added new attraction: " + newAttraction);
     }

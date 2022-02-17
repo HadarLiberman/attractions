@@ -1,12 +1,15 @@
 package com.example.attractionsapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+
 import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,46 +18,61 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AttractionListRvFragment extends Fragment {
 
-
+    MyAdapter adapter;
     List<Attraction> data;
+    SwipeRefreshLayout swipeRefresh;
+
     @Nullable
     @Override
-
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
-        data = Model.instance.getAttractions();
-
+        swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
+        swipeRefresh.setOnRefreshListener(()->refresh());
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        MyAdapter adapter = new MyAdapter();
+        adapter = new MyAdapter();
         list.setAdapter(adapter);
+
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v,int position) {
                 String stId = data.get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId));
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId.toString()));
             }
         });
 
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
 
-        //  setHasOptionsMenu(true);
+        refresh();
+
         return view;
+    }
+    private void refresh() {
+        swipeRefresh.setRefreshing(true);
+        Model.instance.getAttractions((list)->{
+            Log.d("list---------------", list.toString());
+            data=list;
+            adapter.notifyDataSetChanged();
+            swipeRefresh.setRefreshing(false);
+
+        });
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -110,15 +128,18 @@ public class AttractionListRvFragment extends Fragment {
             Attraction attraction = data.get(position);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
-            if(attraction.getUri() != null){
-                holder.imagev.setImageURI(attraction.getUri());
-            }else if(attraction.getBitmap() != null){
-                holder.imagev.setImageBitmap(attraction.getBitmap());
-            }
+//            if(attraction.getUri() != null){
+//                holder.imagev.setImageURI(attraction.getUri());
+//            }else if(attraction.getBitmap() != null){
+//                holder.imagev.setImageBitmap(attraction.getBitmap());
+//            }
         }
 
         @Override
         public int getItemCount() {
+            if(data==null){
+                return 0;
+            }
             return data.size();
         }
     }

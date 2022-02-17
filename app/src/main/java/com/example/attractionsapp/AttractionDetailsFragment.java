@@ -13,27 +13,40 @@ import androidx.navigation.Navigation;
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
+import java.util.UUID;
+
 public class AttractionDetailsFragment extends Fragment {
+    TextView titleTv;
+    TextView descTv;
+    TextView locationTv;
+    TextView categoryTv;
+    ImageView backBtn;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
-        String attractionIdId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
-        Attraction attraction = Model.instance.getAttractionById(attractionIdId);
 
-        TextView titleTv = view.findViewById(R.id.details_title_tv);
-        TextView descTv = view.findViewById(R.id.details_desc_tv);
-        TextView locationTv = view.findViewById(R.id.details_location_tv);
-        TextView categoryTv = view.findViewById(R.id.details_category_tv);
+        String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+        Model.instance.getAttractionById(attractionId, new Model.GetAttractionById() {
+            @Override
+            public void onComplete(Attraction attraction) {
+                titleTv.setText(attraction.getTitle());
+                descTv.setText(attraction.getDesc());
+                locationTv.setText(attraction.getLocation());
+                categoryTv.setText(attraction.getCategory());
+            }
+        });
 
-        titleTv.setText(attraction.getTitle());
-        descTv.setText(attraction.getDesc());
-        locationTv.setText(attraction.getLocation());
-        categoryTv.setText(attraction.getCategory());
+        // Find the view components by Id
+        titleTv = view.findViewById(R.id.details_title_tv);
+        descTv = view.findViewById(R.id.details_desc_tv);
+        locationTv = view.findViewById(R.id.details_location_tv);
+        categoryTv = view.findViewById(R.id.details_category_tv);
+        backBtn = view.findViewById(R.id.details_back_btn);
 
-        ImageView backBtn = view.findViewById(R.id.details_back_btn);
         backBtn.setOnClickListener((v)->{
             Navigation.findNavController(v).navigateUp();
         });
