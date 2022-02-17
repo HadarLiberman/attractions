@@ -12,6 +12,7 @@ import android.net.Uri;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Entity
 public class Attraction {
@@ -29,7 +30,7 @@ public class Attraction {
 
     @PrimaryKey
     @NonNull
-    String id = "";
+    String id;
 
     String userId = "";
     String title = "";
@@ -43,7 +44,9 @@ public class Attraction {
     }
 
     public Attraction(String userId, String title, String desc, String category, String location) {
-        this.id = String.valueOf((userId + " " + title).hashCode());
+        //this.id = String.valueOf((userId + " " + title).hashCode());
+        UUID uuid = UUID.randomUUID();
+        this.id = uuid.toString();
         this.userId = userId;
         this.title = title;
         this.desc = desc;

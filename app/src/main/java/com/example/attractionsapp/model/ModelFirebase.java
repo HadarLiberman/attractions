@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ModelFirebase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -48,7 +49,7 @@ public class ModelFirebase {
 
         Map<String, Object> json = attraction.toJson();
         db.collection(Attraction.COLLECTION_NAME)
-                .document(attraction.getId())
+                .document(attraction.getId().toString())
                 .set(json)
                 .addOnSuccessListener(unused ->listener.onComplete())
                 .addOnFailureListener(e->listener.onComplete());
@@ -62,13 +63,11 @@ public class ModelFirebase {
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot >() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        Attraction attraction=null;
+                        Attraction attraction = null;
                         if (task.isSuccessful() & task.getResult()!=null){
                                 attraction = Attraction.create(task.getResult().getData());
                                 Log.d("TAG","PICK ATT");
-
                             }
-
                         listener.onComplete(attraction);
                     }
                 });

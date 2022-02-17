@@ -13,12 +13,14 @@ import androidx.navigation.Navigation;
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
+import java.util.UUID;
+
 public class AttractionDetailsFragment extends Fragment {
     TextView titleTv;
     TextView descTv;
     TextView locationTv;
     TextView categoryTv;
-
+    ImageView backBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,8 +29,8 @@ public class AttractionDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
 
-        String attractionIdId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
-        Model.instance.getAttractionById(attractionIdId, new Model.GetAttractionById() {
+        String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+        Model.instance.getAttractionById(attractionId, new Model.GetAttractionById() {
             @Override
             public void onComplete(Attraction attraction) {
                 titleTv.setText(attraction.getTitle());
@@ -38,14 +40,13 @@ public class AttractionDetailsFragment extends Fragment {
             }
         });
 
+        // Find the view components by Id
         titleTv = view.findViewById(R.id.details_title_tv);
         descTv = view.findViewById(R.id.details_desc_tv);
         locationTv = view.findViewById(R.id.details_location_tv);
         categoryTv = view.findViewById(R.id.details_category_tv);
+        backBtn = view.findViewById(R.id.details_back_btn);
 
-
-
-        ImageView backBtn = view.findViewById(R.id.details_back_btn);
         backBtn.setOnClickListener((v)->{
             Navigation.findNavController(v).navigateUp();
         });

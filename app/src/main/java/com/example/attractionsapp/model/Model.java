@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -49,7 +50,7 @@ public class Model {
     }
 
     public void getAttractions(GetAttractionsListener listener){
-modelFirebase.getAttractions(listener);
+            modelFirebase.getAttractions(listener);
 //        executor.execute(()->{
 ////            try{
 ////                Thread.sleep(3000);
@@ -93,8 +94,8 @@ modelFirebase.getAttractions(listener);
     }
 
     public Attraction getAttractionById(String attractionId, GetAttractionById listener) {
-        modelFirebase.getAttractionById(attractionId,listener);
-        return null;
+         modelFirebase.getAttractionById(attractionId,listener);
+         return null;
     }
 //        for (Attraction s:data
 //        ) {

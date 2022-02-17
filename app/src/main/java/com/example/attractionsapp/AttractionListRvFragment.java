@@ -24,16 +24,16 @@ import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.Attraction;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AttractionListRvFragment extends Fragment {
 
     MyAdapter adapter;
     List<Attraction> data;
     SwipeRefreshLayout swipeRefresh;
+
     @Nullable
     @Override
-
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
@@ -47,11 +47,12 @@ public class AttractionListRvFragment extends Fragment {
         adapter = new MyAdapter();
         list.setAdapter(adapter);
 
+
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View v,int position) {
                 String stId = data.get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId));
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId.toString()));
             }
         });
 
@@ -66,12 +67,9 @@ public class AttractionListRvFragment extends Fragment {
         swipeRefresh.setRefreshing(true);
         Model.instance.getAttractions((list)->{
             Log.d("list---------------", list.toString());
-
             data=list;
             adapter.notifyDataSetChanged();
             swipeRefresh.setRefreshing(false);
-
-
 
         });
 
