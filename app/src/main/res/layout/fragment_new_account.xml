@@ -8,7 +8,7 @@
     tools:context=".NewAccountFragment">
 
     <EditText
-        android:id="@+id/newAccount_email_edt"
+        android:id="@+id/login_email_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -57,7 +57,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/newAccount_name_tv2"
-        app:layout_constraintTop_toBottomOf="@+id/newAccount_email_edt" />
+        app:layout_constraintTop_toBottomOf="@+id/login_email_edt" />
 
     <EditText
         android:id="@+id/newAccount_name_edt"
@@ -76,7 +76,7 @@
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/newAccount_password_edt"
+        android:id="@+id/login_password_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -86,9 +86,9 @@
         android:textColor="#594D4D"
         android:textColorHint="#594D4D"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/newAccount_email_edt"
+        app:layout_constraintEnd_toEndOf="@+id/login_email_edt"
         app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toStartOf="@+id/newAccount_email_edt"
+        app:layout_constraintStart_toStartOf="@+id/login_email_edt"
         app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv3"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 

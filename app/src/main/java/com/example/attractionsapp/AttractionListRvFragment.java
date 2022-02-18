@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class AttractionListRvFragment extends Fragment {
+
     AttractionListRvViewModel viewModel;
     MyAdapter adapter;
     SwipeRefreshLayout swipeRefresh;
@@ -46,6 +47,11 @@ public class AttractionListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
+
+        Integer selected_category = AttractionListRvFragmentArgs.fromBundle(getArguments()).getSelectedCategory();
+        Log.d("TAG","SELECTED CATEGORY : "+ selected_category);
+
+
         swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
         swipeRefresh.setOnRefreshListener(()->Model.instance.refreshAttractionList());
         RecyclerView list = view.findViewById(R.id.user_attractions_rv);
@@ -65,7 +71,7 @@ public class AttractionListRvFragment extends Fragment {
             @Override
             public void onItemClick(View v,int position) {
                 String stId = viewModel.getData().getValue().get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId.toString()));
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId));
             }
         });
 

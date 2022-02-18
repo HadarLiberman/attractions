@@ -145,11 +145,13 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
         saveBtn.setOnClickListener((v)->{
 
-            save();
             isHasValues();
             if (hasValues){
-                save();
-                Navigation.findNavController(v).navigateUp();
+                Attraction attraction = save();
+                Model.instance.addAttraction(attraction,()->{
+                    Navigation.findNavController(v).navigateUp();
+                });
+//                Navigation.findNavController(v).navigateUp();
             }
 
         });
@@ -159,7 +161,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
 
     @SuppressLint("LongLogTag")
-    private void save(){
+    private Attraction save(){
 
 
         Log.d(TAG, "onClick: attempting to post...");
@@ -178,15 +180,10 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             newAttraction = new Attraction("7",title,desc,category,location);
         }
 
-
-        Model.instance.addAttraction(newAttraction,()->{
-            Navigation.findNavController(titleEt).navigateUp();
-
-        });
-
-
-
         Log.d("TAG", "added new attraction: " + newAttraction);
+
+        return newAttraction;
+
     }
 
     private void hideKeyboard(View view) {

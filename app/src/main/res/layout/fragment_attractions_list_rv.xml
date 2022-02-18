@@ -7,26 +7,6 @@
     android:background="#E2EFF1"
     tools:context=".AttractionListRvFragment">
 
-    <TextView
-        android:id="@+id/hello_tv"
-        android:layout_width="39dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="20dp"
-        android:text="Hello"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/user_name_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hadar Liberman"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hello_tv" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/attractionlist_swiperefresh"
         android:layout_width="0dp"

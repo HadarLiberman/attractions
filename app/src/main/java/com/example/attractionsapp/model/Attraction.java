@@ -65,7 +65,15 @@ public class Attraction {
         this.location = location;
         //this.uri = uri;
         //this.bitmap = bitmap;
+    }
 
+    public Attraction(String id,String userId, String title, String desc, String category, String location) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.desc = desc;
+        this.category = category;
+        this.location = location;
     }
 
 
@@ -166,7 +174,7 @@ public class Attraction {
         //Uri uri = (Uri) json.get(URI);
        // Bitmap bitmap = (Bitmap) json.get(BITMAP);
 
-        Attraction attraction = new Attraction(userId, title, desc, category, location);
+        Attraction attraction = new Attraction(id,userId, title, desc, category, location);
         attraction.setUpdateDate(updateDate);
         return attraction;
     }
