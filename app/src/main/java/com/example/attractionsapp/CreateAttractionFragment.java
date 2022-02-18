@@ -72,7 +72,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     private Bitmap bitmap = null;
     private Uri uri = null;
     private boolean hasValues = false;
-
+    String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +80,8 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
         View view = inflater.inflate(R.layout.fragment_create_attraction, container, false);
         //data = Model.instance.getAttractions();
+        user_id = CreateAttractionFragmentArgs.fromBundle(getArguments()).getUserId();
+
 
         titleEt = view.findViewById(R.id.signup_name_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
@@ -171,9 +173,9 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         String image = ""; // TODO add image
         Attraction newAttraction;
         if(uri != null){
-            newAttraction = new Attraction("7",title,desc,category,location);
+            newAttraction = new Attraction(user_id,title,desc,category,location);
         } else{
-            newAttraction = new Attraction("7",title,desc,category,location);
+            newAttraction = new Attraction(user_id,title,desc,category,location);
         }
 
         Log.d("TAG", "added new attraction: " + newAttraction);

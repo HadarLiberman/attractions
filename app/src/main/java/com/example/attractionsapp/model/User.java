@@ -18,6 +18,7 @@ public class User {
     String password;
     Long updateDate=new Long(0);
     List<Attraction> attractions=new ArrayList<>();
+    String imageUrl;
 
 
     public void setUpdateDate(Long updateDate) {
@@ -74,6 +75,13 @@ public class User {
         return attractions;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public void setAttractions(List<Attraction> attractions) {
         this.attractions = attractions;
     }
@@ -87,7 +95,7 @@ public class User {
         result.put("email", email);
         result.put("password", password);
         result.put("updateDate", FieldValue.serverTimestamp());
-
+        result.put("imageUrl", imageUrl);
         return result;
     }
 
@@ -96,6 +104,7 @@ public class User {
 
         this.email= (String) map.get("email");
         this.password= (String) map.get("password");
+        this.imageUrl = (String) map.get("imageUrl");
         Timestamp ts = (Timestamp) map.get("updateDate");
         this.updateDate = ts.getSeconds();
 

@@ -42,14 +42,25 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
 
 
         String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+        String user_id = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getUserId();
+        Log.d("TAG","user recived email from att list "+user_id);
         Log.d("TAG","attractionId" + attractionId);
         Model.instance.getAttractionById(attractionId, new Model.GetAttractionById() {
             @Override
             public void onComplete(Attraction attraction) {
+
                 titleTv.setText(attraction.getTitle());
                 descTv.setText(attraction.getDesc());
                 locationTv.setText(attraction.getLocation());
                 categoryTv.setText(attraction.getCategory());
+                Log.d("TAG","USER ID FROM ATRR " + attraction.getUserId());
+                Log.d("TAG","USER ID FROM NAV " + user_id);
+                Log.d("TAG","res " + (attraction.getUserId()!=user_id));
+
+                if(!attraction.getUserId().equals(user_id)){
+                    editBtn.setVisibility(View.INVISIBLE);
+                    deleteBtn.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -64,9 +75,10 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
             Navigation.findNavController(v).navigateUp();
         });
 
+
         editBtn = view.findViewById(R.id.details_edit_btn);
         editBtn.setOnClickListener((v)->{
-            Navigation.findNavController(v).navigate(AttractionDetailsFragmentDirections.actionUserAttractionDetailsFragment2ToUpdateAttractionFragment(attractionId));
+            Navigation.findNavController(v).navigate(AttractionDetailsFragmentDirections.actionUserAttractionDetailsFragment2ToUpdateAttractionFragment(attractionId,user_id));
         });
 
         deleteBtn = view.findViewById(R.id.details_delete_btn);

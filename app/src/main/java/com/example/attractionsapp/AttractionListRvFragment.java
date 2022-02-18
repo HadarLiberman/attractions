@@ -35,6 +35,7 @@ public class AttractionListRvFragment extends Fragment {
     AttractionListRvViewModel viewModel;
     MyAdapter adapter;
     SwipeRefreshLayout swipeRefresh;
+    String user_id;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -47,7 +48,8 @@ public class AttractionListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
-
+        user_id = AttractionListRvFragmentArgs.fromBundle(getArguments()).getUserId();
+        Log.d("TAG","user recived email from att home "+user_id);
         Integer selected_category = AttractionListRvFragmentArgs.fromBundle(getArguments()).getSelectedCategory();
         Log.d("TAG","SELECTED CATEGORY : "+ selected_category);
 
@@ -71,12 +73,12 @@ public class AttractionListRvFragment extends Fragment {
             @Override
             public void onItemClick(View v,int position) {
                 String stId = viewModel.getData().getValue().get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId));
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId,user_id));
             }
         });
 
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
-        add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment()));
+        add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment(user_id)));
         viewModel.getData().observe(getViewLifecycleOwner(),list1->refresh());
         swipeRefresh.setRefreshing(Model.instance.getAttrationListLoadingStage().getValue()==Model.AttrationListLoadingStage.loading);
         Model.instance.getAttrationListLoadingStage().observe(getViewLifecycleOwner(), attrationListLoadingStage -> {
@@ -107,6 +109,7 @@ public class AttractionListRvFragment extends Fragment {
         TextView titleTv;
         TextView decsTv;
         ImageView imagev;
+        TextView mypost;
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
@@ -114,6 +117,8 @@ public class AttractionListRvFragment extends Fragment {
             titleTv = itemView.findViewById(R.id.details_title_tv);
             decsTv = itemView.findViewById(R.id.details_desc_tv);
             imagev = itemView.findViewById(R.id.details_image_imv);
+            mypost=itemView.findViewById(R.id.detailes_mypost_tv);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -150,6 +155,9 @@ public class AttractionListRvFragment extends Fragment {
             Attraction attraction = viewModel.getData().getValue().get(position);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
+//            if(!attraction.getUserId().equals(user_id)){
+//                holder.mypost.setText("");
+//            }
 //            if(attraction.getUri() != null){
 //                holder.imagev.setImageURI(attraction.getUri());
 //            }else if(attraction.getBitmap() != null){

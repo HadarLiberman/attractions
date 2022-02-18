@@ -98,7 +98,7 @@ public class LogInFragment extends Fragment {
                     mySnackbar.show();
                     Log.d("TAG","login successful");
 
-                    Navigation.findNavController(view).navigate(R.id.homeFragment);
+                    Navigation.findNavController(view).navigate(LogInFragmentDirections.actionLogInFragmentToHomeFragment(email_user));
                 }
                 else
                     //Log.d("TAG","Login failed");
