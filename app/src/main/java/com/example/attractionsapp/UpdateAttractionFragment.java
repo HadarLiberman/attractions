@@ -19,10 +19,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
+
+import org.w3c.dom.Attr;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,6 +50,10 @@ public class UpdateAttractionFragment extends Fragment {
     private Bitmap bitmap = null;
     private Uri uri = null;
     private boolean hasValues = false;
+    int posCat;
+    int posLoc;
+
+    AttractionListRvViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +61,20 @@ public class UpdateAttractionFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_update_attraction, container, false);
 
-        String attractionIdId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
-        attraction = Model.instance.getAttractionById(attractionIdId);
+//        String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+//        attraction = Model.instance.getAttractionById(attractionId);
+
+        String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+        Log.d("TAG","attractionId" + attractionId);
+
+        viewModel = new ViewModelProvider(this).get(AttractionListRvViewModel.class);
+        List<Attraction> list = viewModel.getData().getValue();
+        Log.d("TAG", "lis: " + list.toString());
+
+        for (Attraction atr : list) {
+            if (atr.getId().equals(attractionId))
+                attraction = atr;
+        }
 
         titleEt = view.findViewById(R.id.newAccount_name_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
@@ -99,8 +118,8 @@ public class UpdateAttractionFragment extends Fragment {
         ArrayAdapter<String> dataAdapter_category = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, category);
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(dataAdapter_category);
-        int pos = dataAdapter_category.getPosition(attraction.getCategory());
-        categorySpinner.setSelection(pos);
+        posCat = dataAdapter_category.getPosition(attraction.getCategory());
+        categorySpinner.setSelection(posCat);
 
 
 
@@ -114,14 +133,14 @@ public class UpdateAttractionFragment extends Fragment {
         ArrayAdapter<String> dataAdapter_location = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, location);
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(dataAdapter_location);
-        pos = dataAdapter_location.getPosition(attraction.getLocation());
-        locationSpinner.setSelection(pos);
+        posLoc = dataAdapter_location.getPosition(attraction.getLocation());
+        locationSpinner.setSelection(posLoc);
 
-        if(attraction.getUri() != null){
-            postImage.setImageURI(attraction.getUri());
-        }else if(attraction.getBitmap() != null){
-            postImage.setImageBitmap(attraction.getBitmap());
-        }
+//        if(attraction.getUri() != null){
+//            postImage.setImageURI(attraction.getUri());
+//        }else if(attraction.getBitmap() != null){
+//            postImage.setImageBitmap(attraction.getBitmap());
+//        }
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
@@ -130,7 +149,9 @@ public class UpdateAttractionFragment extends Fragment {
             isHasValues();
             if (hasValues){
                 save();
-                Navigation.findNavController(v).navigateUp();
+                Model.instance.addAttraction(attraction, () -> {
+                    Navigation.findNavController(v).navigateUp();
+                });
             }
         });
 
@@ -152,8 +173,6 @@ public class UpdateAttractionFragment extends Fragment {
         attraction.setDesc(desc);
         attraction.setLocation(location);
         attraction.setCategory(category);
-
-
 
         Log.d("TAG", "added new attraction on date: " + date);
     }

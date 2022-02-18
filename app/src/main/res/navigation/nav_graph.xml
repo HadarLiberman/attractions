@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/attractionListRvFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/attractionListRvFragment"
@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_attractionListRvFragment_to_updateAttractionFragment"
             app:destination="@id/updateAttractionFragment" />
+        <argument
+            android:name="selected_category"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/attractionDetailsFragment"
@@ -55,4 +58,13 @@
         android:name="com.example.attractionsapp.NewAccountFragment"
         android:label="fragment_new_account"
         tools:layout="@layout/fragment_new_account" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.attractionsapp.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_attractionListRvFragment"
+            app:destination="@id/attractionListRvFragment" />
+    </fragment>
 </navigation>

@@ -42,6 +42,7 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
 
 
         String attractionId = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getAttractionId();
+        Log.d("TAG","attractionId" + attractionId);
         Model.instance.getAttractionById(attractionId, new Model.GetAttractionById() {
             @Override
             public void onComplete(Attraction attraction) {
@@ -73,18 +74,31 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
             DeleteAttractionDialog dialog = new DeleteAttractionDialog();
             dialog.show(getParentFragmentManager(), "DeleteAttraction");
             dialog.setTargetFragment(AttractionDetailsFragment.this, 1);
-            if(deleteAnswer){
-//                deleteAttraction(attractionId);
-                Navigation.findNavController(v).navigateUp();
-            }
+            Model.instance.modelFirebase.delete(attractionId);
+            Navigation.findNavController(v).navigateUp();
+
+
+            // TODO try to fix the dialog
+//            if(deleteAnswer){
+//                Model.instance.modelFirebase.delete(attractionId);
+////                deleteAttraction(attractionId);
+//                Navigation.findNavController(v).navigateUp();
+//            }
         });
 
 
-        return view;
+         return view;
     }
 
     private void deleteAttraction(String id){
-        Model.instance.deleteAttractionbyId(id);
+//        Model.instance.modelFirebase.addGiftCard(giftCard, new Model.AddGiftCardListener() {
+//            @Override
+//            public void onComplete() {
+//                Navigation.findNavController(view).navigateUp();
+//                Snackbar mySnackbar = Snackbar.make(view, "GiftCard Deleted!", BaseTransientBottomBar.LENGTH_LONG);
+//                mySnackbar.show();
+//            }
+//        });
     }
 
 

@@ -8,7 +8,7 @@ import com.example.attractionsapp.MyApplication;
 
 //import com.example.attractionsapp.MyApplication;
 
-@Database(entities = {Attraction.class}, version = 2)
+@Database(entities = {Attraction.class}, version = 3)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract AttractionDao attractionDao();
 }
