@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ModelFirebase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public ModelFirebase() {
+
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(false)
                 .build();
@@ -109,5 +111,49 @@ public class ModelFirebase {
                         Log.w("TAG", "Error deleting document", e);
                     }
                 });
+    }
+
+
+    ///users
+    public interface GetAllUsersListener {
+        void onComplete(List<User> list);
+    }
+
+    public void getAllUsers(final GetAllUsersListener listener) {
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").get().addOnCompleteListener(task -> {
+            List<User> data = new ArrayList<>();
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot doc : task.getResult()) {
+                    User user = new User();
+                    user.fromMap(doc.getData());
+                    data.add(user);
+                }
+            }
+            listener.onComplete(data);
+        });
+    }
+
+
+
+    public void addUser(User user, final Model.AddUserListener listener) {
+        // FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(User.COLLECTION_NAME).document(user.getEmail())
+                .set(user.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("TAG", "user added successfully");
+                listener.onComplete();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAG", "fail adding student");
+                listener.onComplete();
+            }
+        });
+    }
+    public void updateUser(User user, Model.AddUserListener listener) {
+        addUser(user,listener);
     }
 }

@@ -15,8 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import android.widget.ProgressBar;
-
 import android.widget.ImageView;
 
 import android.widget.Spinner;
@@ -30,8 +28,6 @@ import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -85,14 +81,14 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         View view = inflater.inflate(R.layout.fragment_create_attraction, container, false);
         //data = Model.instance.getAttractions();
 
-        titleEt = view.findViewById(R.id.newAccount_name_edt);
+        titleEt = view.findViewById(R.id.signup_name_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
 
 
         uploadPhoto = view.findViewById(R.id.post_image);
         categorySpinner = view.findViewById(R.id.createAttraction_category_spinner);
         locationSpinner = view.findViewById(R.id.createAttraction_location_spinner);
-        saveBtn = view.findViewById(R.id.create_save_btn);
+        saveBtn = view.findViewById(R.id.signup_login_btn);
 
 
         // hide keyboard
