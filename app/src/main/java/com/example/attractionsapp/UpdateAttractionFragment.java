@@ -25,8 +25,6 @@ import androidx.navigation.Navigation;
 import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
 
-import org.w3c.dom.Attr;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,12 +74,12 @@ public class UpdateAttractionFragment extends Fragment {
                 attraction = atr;
         }
 
-        titleEt = view.findViewById(R.id.newAccount_name_edt);
+        titleEt = view.findViewById(R.id.signup_name_edt);
         descEt = view.findViewById(R.id.createAttraction_description_edt);
         postImage = view.findViewById(R.id.post_image);
         categorySpinner = view.findViewById(R.id.createAttraction_category_spinner);
         locationSpinner = view.findViewById(R.id.createAttraction_location_spinner);
-        saveBtn = view.findViewById(R.id.create_save_btn);
+        saveBtn = view.findViewById(R.id.signup_login_btn);
 
         titleEt.setText(attraction.getTitle());
         descEt.setText(attraction.getDesc());

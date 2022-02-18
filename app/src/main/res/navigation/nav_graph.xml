@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/signUpFragment">
 
     <fragment
         android:id="@+id/attractionListRvFragment"
@@ -22,6 +22,9 @@
         <argument
             android:name="selected_category"
             app:argType="integer" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/attractionDetailsFragment"
@@ -34,6 +37,9 @@
         <action
             android:id="@+id/action_userAttractionDetailsFragment2_to_updateAttractionFragment"
             app:destination="@id/updateAttractionFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/updateAttractionFragment"
@@ -42,22 +48,28 @@
         tools:layout="@layout/fragment_update_attraction" >
         <argument android:name="attractionId"
             app:argType="string" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/createAttractionFragment"
         android:name="com.example.attractionsapp.CreateAttractionFragment"
         android:label="fragment_create_attraction"
-        tools:layout="@layout/fragment_create_attraction" />
+        tools:layout="@layout/fragment_create_attraction" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.example.attractionsapp.LogInFragment"
         android:label="fragment_log_in"
-        tools:layout="@layout/fragment_log_in" />
-    <fragment
-        android:id="@+id/newAccountFragment"
-        android:name="com.example.attractionsapp.NewAccountFragment"
-        android:label="fragment_new_account"
-        tools:layout="@layout/fragment_new_account" />
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.attractionsapp.HomeFragment"
@@ -66,5 +78,27 @@
         <action
             android:id="@+id/action_homeFragment_to_attractionListRvFragment"
             app:destination="@id/attractionListRvFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.attractionsapp.SignUpFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/action_signUpFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.attractionsapp.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" >
+        <argument android:name="userId" />
     </fragment>
 </navigation>

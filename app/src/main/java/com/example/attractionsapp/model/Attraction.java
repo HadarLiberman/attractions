@@ -3,6 +3,7 @@ package com.example.attractionsapp.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import android.graphics.Bitmap;
@@ -36,24 +37,23 @@ public class Attraction {
     @PrimaryKey
     @NonNull
     String id;
-
     String userId = "";
     String title = "";
     String desc = "";
     String category = "";
     String location = "";
+    Long updateDate=new Long(0);
+
+    //Uri uri = null;
+    //Bitmap bitmap = null;
 
     public void setUpdateDate(Long updateDate) {
         this.updateDate = updateDate;
     }
 
-    Long updateDate=new Long(0);
-    //Uri uri = null;
-    //Bitmap bitmap = null;
-
     public Attraction() {
     }
-
+    @Ignore
     public Attraction(String userId, String title, String desc, String category, String location) {
         //this.id = String.valueOf((userId + " " + title).hashCode());
         UUID uuid = UUID.randomUUID();
@@ -66,7 +66,7 @@ public class Attraction {
         //this.uri = uri;
         //this.bitmap = bitmap;
     }
-
+    @Ignore
     public Attraction(String id,String userId, String title, String desc, String category, String location) {
         this.id = id;
         this.userId = userId;
@@ -176,6 +176,7 @@ public class Attraction {
 
         Attraction attraction = new Attraction(id,userId, title, desc, category, location);
         attraction.setUpdateDate(updateDate);
+
         return attraction;
     }
 

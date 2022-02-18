@@ -126,5 +126,22 @@ public class Model {
          return null;
     }
 
+    public interface AddUserListener {
+        void onComplete();
+    }
+
+    public void addUser(final User user, final AddUserListener listener) {
+        modelFirebase.addUser(user, new AddUserListener() {
+            @Override
+            public void onComplete() {
+                listener.onComplete();
+            }
+        });
+    }
+
+    public void updateUser(final User user, final AddUserListener listener) {
+        modelFirebase.updateUser(user, listener);
+    }
+
 
 }

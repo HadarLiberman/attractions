@@ -10,7 +10,7 @@
     tools:context=".UpdateAttractionFragment">
 
     <TextView
-        android:id="@+id/newAccount_name_tv"
+        android:id="@+id/signup_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -29,11 +29,11 @@
         android:text="Description"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/newAccount_name_tv"
-        app:layout_constraintTop_toBottomOf="@+id/newAccount_name_tv" />
+        app:layout_constraintStart_toStartOf="@+id/signup_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/signup_name_tv" />
 
     <EditText
-        android:id="@+id/newAccount_name_edt"
+        android:id="@+id/signup_name_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -42,9 +42,9 @@
         android:focusedByDefault="false"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/newAccount_name_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/signup_name_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv"
+        app:layout_constraintTop_toTopOf="@+id/signup_name_tv"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -124,7 +124,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/create_save_btn"
+        app:layout_constraintBottom_toTopOf="@+id/signup_login_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6">
@@ -142,7 +142,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/create_save_btn"
+        android:id="@+id/signup_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
