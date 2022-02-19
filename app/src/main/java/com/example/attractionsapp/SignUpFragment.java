@@ -1,11 +1,9 @@
 package com.example.attractionsapp;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -18,11 +16,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.attractionsapp.model.Model;
 import com.example.attractionsapp.model.User;
@@ -69,9 +67,9 @@ public class SignUpFragment extends Fragment {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_signup, container, false);
         name = view.findViewById(R.id.signup_name_edt);
-        email = view.findViewById(R.id.signup_email_edt);
-        password = view.findViewById(R.id.signup_password_edt);
-        login_btn = view.findViewById(R.id.signup_login_btn);
+        email = view.findViewById(R.id.login_email_edt);
+        password = view.findViewById(R.id.login_password_edt);
+        login_btn = view.findViewById(R.id.login_login_btn);
         submit_btn=view.findViewById(R.id.signup_submit_btn);
         profileImage=view.findViewById(R.id.signup_img);
         uploadPicButton=view.findViewById(R.id.signup_camera_bt);
@@ -89,6 +87,32 @@ public class SignUpFragment extends Fragment {
         login_btn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment());
         });
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        name.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
         return view;
     }
 
@@ -113,50 +137,6 @@ public class SignUpFragment extends Fragment {
         builder.show();
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode != RESULT_CANCELED) {
-//            switch (requestCode) {
-//                case 0:
-//                    if (resultCode == RESULT_OK && data != null) {
-//                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-//                        giftCardImage.setImageBitmap(selectedImage);
-//                        giftCardImage.setTag("img");
-//                    }
-//                    break;
-//                case 1:
-//                    if (resultCode == RESULT_OK && data != null) {
-//                        Uri selectedImage = data.getData();
-//                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//                        if (selectedImage != null) {
-//                            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-//                                    filePathColumn, null, null, null);
-//                            if (cursor != null) {
-//                                cursor.moveToFirst();
-//                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                                String picturePath = cursor.getString(columnIndex);
-//                                giftCardImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-//                                giftCardImage.setTag("img");
-//                                cursor.close();
-//                            }
-//                        }
-//                    }
-//                    break;
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if(requestCode==100&&( grantResults.length>0)&&(grantResults[0]+grantResults[1]== PackageManager.PERMISSION_GRANTED)
-//        ){
-//            getCurrentLocation();
-//        }else{
-//            Toast.makeText(getActivity(),"Permission denied",Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 
     public void save() {
         Log.d("TAG","inside save");
@@ -165,7 +145,6 @@ public class SignUpFragment extends Fragment {
         name_usr = name.getText().toString();
         email_usr = email.getText().toString();
         password_usr = password.getText().toString();
-
 
         if (name_usr == null ) {
             name.setError("You must enter your name");
@@ -179,7 +158,6 @@ public class SignUpFragment extends Fragment {
             return;
         }
 
-
         mAuth.createUserWithEmailAndPassword(email_usr,password_usr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -190,11 +168,12 @@ public class SignUpFragment extends Fragment {
         });
         user = new User(name_usr, email_usr, password_usr);
         Log.d("TAG","user that entered "+user.getEmail());
-        Snackbar mySnackbar = Snackbar.make(view, "signUp succeed, Nice to meet you :)", BaseTransientBottomBar.LENGTH_LONG);
-        mySnackbar.show();
+
 
         Model.instance.addUser(user, () -> {
             Log.d("TAG","USER EMAIL "+email_usr);
+            Snackbar mySnackbar = Snackbar.make(view, "signUp succeed, Nice to meet you :)", BaseTransientBottomBar.LENGTH_LONG);
+            mySnackbar.show();
             Navigation.findNavController(view).navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment(email_usr));
         });
     }
@@ -212,5 +191,9 @@ public class SignUpFragment extends Fragment {
         menu.clear();
     }
 
+    private void hideKeyboard(View view) {
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+    }
 
 }

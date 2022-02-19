@@ -90,7 +90,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         uploadPhoto = view.findViewById(R.id.post_image);
         categorySpinner = view.findViewById(R.id.createAttraction_category_spinner);
         locationSpinner = view.findViewById(R.id.createAttraction_location_spinner);
-        saveBtn = view.findViewById(R.id.signup_login_btn);
+        saveBtn = view.findViewById(R.id.login_login_btn);
 
 
         // hide keyboard

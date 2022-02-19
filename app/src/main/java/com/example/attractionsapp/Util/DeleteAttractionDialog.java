@@ -1,6 +1,7 @@
 package com.example.attractionsapp.Util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.attractionsapp.R;
@@ -33,8 +36,8 @@ public class DeleteAttractionDialog extends DialogFragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: user choose deleting attraction.");
                 answer = true;
-                onSelectedListener.getAnswer(true);
-                getDialog().dismiss();
+//                onSelectedListener.getAnswer(true);
+//                getDialog().dismiss();
             }
         });
 
@@ -44,8 +47,8 @@ public class DeleteAttractionDialog extends DialogFragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: user choose cancel");
                 answer = false;
-                onSelectedListener.getAnswer(false);
-                getDialog().dismiss();
+//                onSelectedListener.getAnswer(false);
+//                getDialog().dismiss();
             }
         });
 
@@ -53,14 +56,14 @@ public class DeleteAttractionDialog extends DialogFragment {
         return view;
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//            //send the uri to PostFragment & dismiss dialog
-//            onSelectedListener.getAnswer(answer);
-//            getDialog().dismiss();
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+            //send the uri to PostFragment & dismiss dialog
+            onSelectedListener.getAnswer(answer);
+            getDialog().dismiss();
+    }
 
     @Override
     public void onAttach(Context context) {
