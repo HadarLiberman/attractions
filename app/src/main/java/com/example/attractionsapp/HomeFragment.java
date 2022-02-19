@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 
 public class HomeFragment extends Fragment {
@@ -28,6 +29,9 @@ public class HomeFragment extends Fragment {
     ImageButton btn7;
     ImageButton btn8;
 
+    ImageView profile;
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -39,7 +43,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         String user_id = HomeFragmentArgs.fromBundle(getArguments()).getUserId();
-
+        profile=view.findViewById(R.id.home_profile_imv);
         btn0 = view.findViewById(R.id.btn_0);
         btn1 = view.findViewById(R.id.btn_1);
         btn2 = view.findViewById(R.id.btn_2);
@@ -50,17 +54,18 @@ public class HomeFragment extends Fragment {
         btn7 = view.findViewById(R.id.btn_7);
         btn8 = view.findViewById(R.id.btn_8);
 
-        btn0.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(0,user_id)));
-        btn1.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(1,user_id)));
-        btn2.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(2,user_id)));
-        btn3.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(3,user_id)));
-        btn4.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(4,user_id)));
-        btn5.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(5,user_id)));
-        btn6.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(6,user_id)));
-        btn7.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(7,user_id)));
-        btn8.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment(8,user_id)));
+        btn0.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Eating and Drinking",user_id)));
+        btn1.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Trips",user_id)));
+        btn2.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Sport",user_id)));
+        btn3.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Events",user_id)));
+        btn4.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Gardens and Parks",user_id)));
+        btn5.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Shopping",user_id)));
+        btn6.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("North",user_id)));
+        btn7.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Central Israel",user_id)));
+        btn8.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("South",user_id)));
 
-        Log.d("TAG", "finish load btns");
+        profile.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(user_id)));
+
         return view;
     }
 }

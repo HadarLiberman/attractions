@@ -173,9 +173,9 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         String image = ""; // TODO add image
         Attraction newAttraction;
         if(uri != null){
-            newAttraction = new Attraction(user_id,title,desc,category,location);
+            newAttraction = new Attraction(user_id,title,desc,category,location,uri.toString());
         } else{
-            newAttraction = new Attraction(user_id,title,desc,category,location);
+            newAttraction = new Attraction(user_id,title,desc,category,location,"");
         }
 
         Log.d("TAG", "added new attraction: " + newAttraction);

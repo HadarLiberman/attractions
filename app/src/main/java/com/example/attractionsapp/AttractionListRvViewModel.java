@@ -12,12 +12,16 @@ public class AttractionListRvViewModel extends ViewModel {
 
 
     LiveData<List<Attraction>> data;
+
    public AttractionListRvViewModel(){
         data= Model.instance.getAll();
     }
 
 
     public LiveData<List<Attraction>> getData() {
+
         return data;
     }
+
+
 }

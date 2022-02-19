@@ -127,16 +127,6 @@
         app:layout_constraintEnd_toEndOf="@+id/details_image_imv"
         app:layout_constraintTop_toBottomOf="@+id/details_image_imv" />
 
-    <ImageView
-        android:id="@+id/details_back_btn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -148,7 +138,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
 
         android:layout_marginTop="26dp"
         android:background="#E2EFF1"
@@ -156,21 +146,10 @@
         app:layout_constraintStart_toStartOf="@+id/details_desc_tv"
         app:layout_constraintTop_toBottomOf="@+id/details_desc_tv">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/commentslist_swiperefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/details_comments_list_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"></androidx.recyclerview.widget.RecyclerView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_comments_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

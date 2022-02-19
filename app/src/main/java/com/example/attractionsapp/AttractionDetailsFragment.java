@@ -42,7 +42,7 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
     TextView locationTv;
     TextView categoryTv;
     TextView myPost;
-    ImageView backBtn;
+
     ImageView editBtn;
     ImageView deleteBtn;
 
@@ -93,23 +93,33 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
                     deleteBtn.setVisibility(View.INVISIBLE);
                     myPost.setVisibility(View.INVISIBLE);
                 }
+                deleteBtn.setOnClickListener((v) -> {
+                    // TODO try to fix the dialog
+//            DeleteAttractionDialog dialog = new DeleteAttractionDialog();
+//            dialog.show(getParentFragmentManager(), "DeleteAttraction");
+//            dialog.setTargetFragment(AttractionDetailsFragment.this, 1);
+                    Model.instance.modelFirebase.delete(attraction);
+                    Model.instance.deleteAttraction(attraction);
+                    Navigation.findNavController(v).navigateUp();
+//            if(deleteAnswer){
+//                Model.instance.modelFirebase.delete(attractionId);
+////                deleteAttraction(attractionId);
+//                Navigation.findNavController(v).navigateUp();
+//            }
+                });
             }
         });
 
         // Find the view components by Id
         titleTv = view.findViewById(R.id.details_title_tv);
-        descTv = view.findViewById(R.id.comment_row_desc_tv);
+        descTv = view.findViewById(R.id.details_desc_tv);
         locationTv = view.findViewById(R.id.details_location_tv);
         categoryTv = view.findViewById(R.id.details_category_tv);
-        backBtn = view.findViewById(R.id.details_back_btn);
+
         myPost = view.findViewById(R.id.detailes_mypost_tv);
         count_comments = view.findViewById(R.id.details_comment_count);
         send_comment = view.findViewById(R.id.details_post_comments_imb);
         comment = view.findViewById(R.id.details_comments_et);
-
-        backBtn.setOnClickListener((v) -> {
-            Navigation.findNavController(v).navigateUp();
-        });
 
 
         editBtn = view.findViewById(R.id.details_edit_btn);
@@ -118,19 +128,7 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
         });
 
         deleteBtn = view.findViewById(R.id.details_delete_btn);
-        deleteBtn.setOnClickListener((v) -> {
-            // TODO try to fix the dialog
-//            DeleteAttractionDialog dialog = new DeleteAttractionDialog();
-//            dialog.show(getParentFragmentManager(), "DeleteAttraction");
-//            dialog.setTargetFragment(AttractionDetailsFragment.this, 1);
-            Model.instance.modelFirebase.delete(attractionId);
-            Navigation.findNavController(v).navigateUp();
-//            if(deleteAnswer){
-//                Model.instance.modelFirebase.delete(attractionId);
-////                deleteAttraction(attractionId);
-//                Navigation.findNavController(v).navigateUp();
-//            }
-        });
+
 
         send_comment.setOnClickListener(new View.OnClickListener() {
             @Override

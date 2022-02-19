@@ -1,7 +1,12 @@
 package com.example.attractionsapp;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +29,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 public class AttractionListRvFragment extends Fragment {
 
     AttractionListRvViewModel viewModel;
     MyAdapter adapter;
     SwipeRefreshLayout swipeRefresh;
     String user_id;
+    String selected_category;
+    Context context;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -49,8 +61,9 @@ public class AttractionListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
         user_id = AttractionListRvFragmentArgs.fromBundle(getArguments()).getUserId();
+        selected_category = AttractionListRvFragmentArgs.fromBundle(getArguments()).getSelectedCategory();
+
         Log.d("TAG","user recived email from att home "+user_id);
-        Integer selected_category = AttractionListRvFragmentArgs.fromBundle(getArguments()).getSelectedCategory();
         Log.d("TAG","SELECTED CATEGORY : "+ selected_category);
 
         swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
@@ -76,7 +89,12 @@ public class AttractionListRvFragment extends Fragment {
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment(user_id)));
 
-        viewModel.getData().observe(getViewLifecycleOwner(),list1->refresh());
+        viewModel.getData().observe(getViewLifecycleOwner(),list1-> {
+
+            refresh();
+
+
+        });
         swipeRefresh.setRefreshing(Model.instance.getAttrationListLoadingStage().getValue()==Model.AttrationListLoadingStage.loading);
         Model.instance.getAttrationListLoadingStage().observe(getViewLifecycleOwner(), attrationListLoadingStage -> {
          if (attrationListLoadingStage==Model.AttrationListLoadingStage.loading){
@@ -149,6 +167,7 @@ public class AttractionListRvFragment extends Fragment {
             return holder;
         }
 
+
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             Attraction attraction = viewModel.getData().getValue().get(position);
@@ -157,12 +176,28 @@ public class AttractionListRvFragment extends Fragment {
             if(!(attraction.getUserId().equals(user_id))){
                 holder.mypost.setVisibility(View.INVISIBLE);
             }
-//            if(attraction.getUri() != null){
-//                holder.imagev.setImageURI(attraction.getUri());
-//            }else if(attraction.getBitmap() != null){
-//                holder.imagev.setImageBitmap(attraction.getBitmap());
-//            }
+            if(attraction.getUri() != null){
+
+                Bitmap bitmap = null;//from   w  ww  . j  a  v  a2s.  c om
+                try {
+                    bitmap = BitmapFactory.decodeStream(context
+                            .getContentResolver().openInputStream(Uri.parse(attraction.getUri())));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(attraction.getUri()));
+//
+//                Bitmap bitmap = getThumbnail(Uri.parse(attraction.getUri()));
+                holder.imagev.setImageBitmap(bitmap);
+
+//                holder.imagev.setImageURI(Uri.parse(attraction.getUri()) );
+            }
         }
+
+
+
 
         @Override
         public int getItemCount() {
@@ -188,5 +223,6 @@ public class AttractionListRvFragment extends Fragment {
 //            return super.onOptionsItemSelected(item);
 //        }
 //    }
+
 
 }

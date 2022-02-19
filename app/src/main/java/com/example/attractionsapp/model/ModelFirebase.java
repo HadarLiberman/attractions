@@ -102,13 +102,36 @@ public class ModelFirebase {
                 });
 
     }
+//
+//    public void delete(String attractionId) {
+//
+//        FirebaseFirestore.getInstance().collection(Attraction.COLLECTION_NAME).document(attractionId)
+//                .delete()
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        AppLocalDb.db.attractionDao().deleteById(attractionId);
+//                        Log.d("TAG", "DocumentSnapshot successfully deleted!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("TAG", "Error deleting document", e);
+//                    }
+//                });
+//    }
 
-    public void delete(String attractionId) {
-        FirebaseFirestore.getInstance().collection(Attraction.COLLECTION_NAME).document(attractionId)
+
+
+    public void delete(Attraction attraction) {
+
+        FirebaseFirestore.getInstance().collection(Attraction.COLLECTION_NAME).document(attraction.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                         Log.d("TAG", "DocumentSnapshot successfully deleted!");
                     }
                 })
@@ -210,8 +233,23 @@ public class ModelFirebase {
             }
         });
     }
+
+    public void editUser(User user, Model.UpdateUserListener listener) {
+
+        Map<String, Object> json = user.toMap();
+        db.collection(User.COLLECTION_NAME)
+                .document(user.getId().toString())
+                .set(json)
+                .addOnSuccessListener(unused -> listener.onComplete())
+                .addOnFailureListener(e -> listener.onComplete());
+
+    }
+
     public void updateUser(User user, Model.AddUserListener listener) {
         addUser(user,listener);
+    }
+    public void updateUser(User user, Model.UpdateUserListener listener) {
+        editUser(user,listener);
     }
 
 

@@ -121,9 +121,13 @@ public class Model {
         modelFirebase.updateAttraction(attraction, listener);
     }
 
-    public void deleteAttraction(final String attractionID) {
-        modelFirebase.delete(attractionID);
-    }
+//    public void deleteAttraction(final String attractionID) {
+//        modelFirebase.delete(attractionID);
+//    }
+public void deleteAttraction(final Attraction attraction) {
+//    modelFirebase.delete(attraction);
+    AppLocalDb.db.attractionDao().delete(attraction);
+}
 
     public interface  GetAttractionById{
         void  onComplete(Attraction attraction);
@@ -161,7 +165,15 @@ public class Model {
         });
     }
 
-    public void updateUser(final User user, final AddUserListener listener) {
+
+    public interface UpdateUserListener {
+        void onComplete();
+    }
+    public void updateUser1(final User user, final AddUserListener listener) {
+        modelFirebase.updateUser(user, listener);
+    }
+
+    public void updateUser(final User user, final UpdateUserListener listener) {
         modelFirebase.updateUser(user, listener);
     }
 

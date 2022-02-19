@@ -19,4 +19,6 @@ public interface AttractionDao {
     void insertBoth(Attraction att1, Attraction att2);
     @Delete
     void delete(Attraction attraction);
+    @Query("DELETE FROM Attraction WHERE id = :id")
+    void deleteById(String id);
 }
