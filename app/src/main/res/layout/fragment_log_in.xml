@@ -4,11 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C6E3E6"
+    android:background="#E8C6E3E6"
     tools:context=".LogInFragment">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:tintMode="src_atop"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        app:tint="#81A4CDD5" />
+
     <EditText
-        android:id="@+id/signup_email_edt"
+        android:id="@+id/login_email_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -18,8 +32,8 @@
         android:textColor="#594D4D"
         android:textColorHint="#594D4D"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newAccount_name_tv2"
+        app:layout_constraintEnd_toEndOf="@+id/login_password_edt"
+        app:layout_constraintStart_toStartOf="@+id/login_password_edt"
         app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv2"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
@@ -27,13 +41,14 @@
         android:id="@+id/newAccount_name_tv2"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
         android:text="Email:"
         android:textColor="#594D4D"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        tools:layout_editor_absoluteX="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <TextView
         android:id="@+id/newAccount_name_tv3"
@@ -45,12 +60,13 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/newAccount_name_tv2"
-        app:layout_constraintTop_toBottomOf="@+id/signup_email_edt" />
+        app:layout_constraintTop_toBottomOf="@+id/login_email_edt" />
 
     <EditText
-        android:id="@+id/signup_password_edt"
+        android:id="@+id/login_password_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:ems="10"
         android:focusableInTouchMode="true"
         android:focusedByDefault="false"
@@ -58,9 +74,8 @@
         android:textColor="#594D4D"
         android:textColorHint="#594D4D"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/signup_email_edt"
-        app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toStartOf="@+id/signup_email_edt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newAccount_name_tv3"
         app:layout_constraintTop_toTopOf="@+id/newAccount_name_tv3"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
@@ -69,20 +84,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.09" />
+        app:layout_constraintGuide_percent="0.11" />
 
 
     <Button
-        android:id="@+id/signup_login_btn"
+        android:id="@+id/login_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#F1D3D0"
-        android:text="save"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Log In"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_edt" />
 
+    <Button
+        android:id="@+id/login_signin_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#F1D3D0"
+        android:text="Create New Account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_login_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

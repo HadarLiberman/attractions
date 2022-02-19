@@ -1,5 +1,6 @@
 package com.example.attractionsapp.model;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -16,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,14 +30,16 @@ import java.util.UUID;
 
 public class ModelFirebase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DatabaseReference comments = FirebaseDatabase.getInstance().getReference().child("Comments");
+
 
     public ModelFirebase() {
-
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(false)
                 .build();
         db.setFirestoreSettings(settings);
     }
+
 
 
     public interface GetAttractionsListener {
@@ -134,6 +141,56 @@ public class ModelFirebase {
         });
     }
 
+    public interface GetAllCommentsListener {
+        void onComplete(List<Comment> list);
+    }
+
+    public void getAllComments(final GetAllCommentsListener listener) {
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("comments").get().addOnCompleteListener(task -> {
+            List<Comment> data = new ArrayList<>();
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot doc : task.getResult()) {
+                    Comment comment = new Comment();
+                    comment.fromMap(doc.getData());
+                    data.add(comment);
+                }
+            }
+            listener.onComplete(data);
+        });
+    }
+
+    public void addComment(Comment comment, Model.AddCommentListener listener) {
+        db.collection(Comment.COLLECTION_NAME).document(comment.getUserId())
+                .set(comment.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("TAG", "user added successfully");
+                listener.onComplete();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAG", "fail adding comment");
+                listener.onComplete();
+            }
+        });
+    }
+
+    public List<Comment> getAllCommentsOnAttraction(String attractionId){
+        List<Comment> result = new LinkedList<>();
+        getAllComments(new GetAllCommentsListener() {
+            @Override
+            public void onComplete(List<Comment> list) {
+                for (Comment com: list) {
+                    if(com.getAttractionId().equals(attractionId)){
+                        result.add(com);
+                    }
+                }
+            }
+        });
+        return result;
+    }
 
 
     public void addUser(User user, final Model.AddUserListener listener) {
@@ -148,7 +205,7 @@ public class ModelFirebase {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("TAG", "fail adding student");
+                Log.d("TAG", "fail adding user");
                 listener.onComplete();
             }
         });
@@ -156,4 +213,6 @@ public class ModelFirebase {
     public void updateUser(User user, Model.AddUserListener listener) {
         addUser(user,listener);
     }
+
+
 }

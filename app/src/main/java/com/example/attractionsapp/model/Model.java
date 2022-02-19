@@ -28,11 +28,10 @@ public class Model {
 
     public static final Model instance = new Model();
 
-
-
     Executor executor = Executors.newFixedThreadPool(1);
     Handler mainThread= HandlerCompat.createAsync(Looper.getMainLooper());
     public ModelFirebase modelFirebase=new ModelFirebase();
+    User signedUser;
 
     public enum AttrationListLoadingStage{
         loading,
@@ -54,6 +53,7 @@ public class Model {
 
 
     List<Attraction> data = new LinkedList<>();
+    List<Comment> comments = new LinkedList<>();
 
     MutableLiveData<List<Attraction>> attractionsList=new MutableLiveData<List<Attraction>>();
     public LiveData<List<Attraction>> getAll(){
@@ -62,6 +62,14 @@ public class Model {
         }
         return attractionsList;
     }
+
+//    MutableLiveData<List<Comment>> commentsList=new MutableLiveData<List<Comment>>();
+//    public LiveData<List<Comment>> getAllComments(){
+//        if(commentsList.getValue()==null) {
+//            refreshCommentsList();
+//        }
+//        return commentsList;
+//    }
 
     public void refreshAttractionList() {
         attrationListLoadingStage.setValue(AttrationListLoadingStage.loading);
@@ -134,6 +142,20 @@ public class Model {
         modelFirebase.addUser(user, new AddUserListener() {
             @Override
             public void onComplete() {
+                setSignedUser(user);
+                listener.onComplete();
+            }
+        });
+    }
+
+    public interface AddCommentListener {
+        void onComplete();
+    }
+
+    public void addComment(final Comment comment, final AddCommentListener listener) {
+        modelFirebase.addComment(comment, new AddCommentListener() {
+            @Override
+            public void onComplete() {
                 listener.onComplete();
             }
         });
@@ -142,6 +164,30 @@ public class Model {
     public void updateUser(final User user, final AddUserListener listener) {
         modelFirebase.updateUser(user, listener);
     }
+
+    public User getSignedUser() {
+        return signedUser;
+    }
+    public void setSignedUser(User signedUser) {
+        this.signedUser = signedUser;
+    }
+
+//    public List<Comment> getAllCommentsOnAttractionByAttractionIdAndUserId(String attractionId, String userId) {
+//        User signedUser = getSignedUser();
+//        String signedUserId = signedUser.getId();
+//        Dish dish = getDishById(dishId);
+//        List<User> friends = getFriendsList(signedUser.getId());
+//        List<DishReview> dishReviews =  new LinkedList<>();
+//        List<Comment> list = getAllCommentsOnAttraction(attractionId);
+//        for(DishReview rev:list){
+//            for(User friend:friends){
+//                if(rev.getUserId().equals(friend.getId()) && !rev.getUserId().equals(userId) && !rev.getUserId().equals(signedUserId)){
+//                    dishReviews.add(rev);
+//                }
+//            }
+//        }
+//        return dishReviews;
+//    }
 
 
 }

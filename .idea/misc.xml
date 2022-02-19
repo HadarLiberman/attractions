@@ -26,9 +26,16 @@
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/menu/attractions_list_menu.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/menu/base_menu.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/chens/AndroidStudioProjects/attractions/app/src/main/res/menu/student_list_menu.xml" value="0.1" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/attraction_list_row.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/comment_row.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/fragment_attraction_details.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/fragment_attractions_list_rv.xml" value="0.15572916666666667" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/fragment_log_in.xml" value="0.22" />
+        <entry key="..\:/Users/chens/AndroidStudioProjects/hadar/attractions/app/src/main/res/layout/fragment_signup.xml" value="0.22" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" project-jdk-name="12" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="12" project-jdk-type="JavaSDK" />
 </project>

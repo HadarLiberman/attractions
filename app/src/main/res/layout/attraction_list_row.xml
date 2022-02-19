@@ -9,8 +9,21 @@
 
     <!--    android:background="#E5F0F2"-->
 
+    <TextView
+        android:id="@+id/row_mypost_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="My post"
+        android:textColor="#FF9800"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/row_name_tv"
+        app:layout_constraintStart_toEndOf="@+id/row_name_tv"
+        app:layout_constraintTop_toTopOf="@+id/row_name_tv"
+        app:layout_constraintVertical_bias="0.454" />
+
     <ImageView
-        android:id="@+id/details_image_imv"
+        android:id="@+id/row_image_imv"
         android:layout_width="342dp"
         android:layout_height="248dp"
         android:layout_marginTop="60dp"
@@ -24,7 +37,7 @@
         app:srcCompat="@drawable/south" />
 
     <TextView
-        android:id="@+id/details_title_tv"
+        android:id="@+id/row_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
@@ -33,11 +46,11 @@
         android:textColor="#88C5E3"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/details_image_imv"
-        app:layout_constraintStart_toStartOf="@+id/details_image_imv" />
+        app:layout_constraintBottom_toTopOf="@+id/row_image_imv"
+        app:layout_constraintStart_toStartOf="@+id/row_image_imv" />
 
     <TextView
-        android:id="@+id/details_desc_tv"
+        android:id="@+id/row_desc_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -45,8 +58,8 @@
         android:text="The geological wonder of the Dead Sea is one of the must-do tourist attractions in the Middle East."
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/details_image_imv"
-        app:layout_constraintStart_toStartOf="@+id/details_image_imv"
-        app:layout_constraintTop_toBottomOf="@+id/details_image_imv" />
+        app:layout_constraintEnd_toEndOf="@+id/row_image_imv"
+        app:layout_constraintStart_toStartOf="@+id/row_image_imv"
+        app:layout_constraintTop_toBottomOf="@+id/row_image_imv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

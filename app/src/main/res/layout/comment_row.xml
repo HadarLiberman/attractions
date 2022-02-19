@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E2EFF1">
+
+    <TextView
+        android:id="@+id/comment_row_date_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="My post"
+        android:textColor="#FF9800"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/comment_row_name_tv"
+        app:layout_constraintStart_toEndOf="@+id/comment_row_name_tv"
+        app:layout_constraintTop_toTopOf="@+id/comment_row_name_tv"
+        app:layout_constraintVertical_bias="0.454" />
+
+    <TextView
+        android:id="@+id/comment_row_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hadar"
+        android:textColor="#88C5E3"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/comment_row_desc_tv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="The geological wonder of the Dead Sea is one of the must-do tourist attractions in the Middle East."
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/comment_row_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/comment_row_name_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
