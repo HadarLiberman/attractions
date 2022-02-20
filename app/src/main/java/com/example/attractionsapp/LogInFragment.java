@@ -23,6 +23,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.reactivex.annotations.NonNull;
 
@@ -106,8 +108,10 @@ public class LogInFragment extends Fragment {
             return;
         }
 
+
         //authenticate the user
         mAuth.signInWithEmailAndPassword(email_user, password_user).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -115,6 +119,9 @@ public class LogInFragment extends Fragment {
 //                    signUp_btn.setEnabled(false);
 //                    forgotP_btn.setEnabled(false);
 //                    pb.setVisibility(View.INVISIBLE);
+
+
+
                     mySnackbar = Snackbar.make(view, "Login successful :)", BaseTransientBottomBar.LENGTH_LONG);
                     mySnackbar.show();
                     Log.d("TAG", "login successful");
@@ -125,8 +132,10 @@ public class LogInFragment extends Fragment {
                     Toast.makeText(getContext(), "Error! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
 //                pb.setVisibility(View.INVISIBLE);
             }
+
         });
     }
+
 
     private void hideKeyboard(View view) {
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

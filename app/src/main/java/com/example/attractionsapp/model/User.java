@@ -91,7 +91,7 @@ public class User {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
-
+        result.put("name", name);
         result.put("email", email);
         result.put("password", password);
         result.put("updateDate", FieldValue.serverTimestamp());
@@ -101,12 +101,34 @@ public class User {
 
     public void fromMap(Map<String, Object> map) {
         this.id = (String) map.get("id");
-
+        this.name = (String) map.get("name");
         this.email= (String) map.get("email");
         this.password= (String) map.get("password");
         this.imageUrl = (String) map.get("imageUrl");
         Timestamp ts = (Timestamp) map.get("updateDate");
         this.updateDate = ts.getSeconds();
+
+
+    }
+
+
+
+    public User create(Map<String, Object> map) {
+        this.id = (String) map.get("id");
+        this.name = (String) map.get("name");
+        this.email= (String) map.get("email");
+        this.password= (String) map.get("password");
+        this.imageUrl = (String) map.get("imageUrl");
+        Timestamp ts = (Timestamp) map.get("updateDate");
+        this.updateDate = ts.getSeconds();
+        User user=new User(name,email,password);
+        user.setId(id);
+        user.setUpdateDate(updateDate);
+        user.setImageUrl(imageUrl);
+
+        return user;
+
+
 
     }
 

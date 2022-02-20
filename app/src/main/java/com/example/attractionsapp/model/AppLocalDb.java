@@ -8,7 +8,7 @@ import com.example.attractionsapp.MyApplication;
 
 //import com.example.attractionsapp.MyApplication;
 
-@Database(entities = {Attraction.class}, version = 3)
+@Database(entities = {Attraction.class}, version = 5)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract AttractionDao attractionDao();
 }
@@ -18,5 +18,6 @@ public class AppLocalDb{
                     AppLocalDbRepository.class,
                     "dbFileName.db")
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
 }

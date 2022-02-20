@@ -54,6 +54,10 @@ public class UserViewModel extends ViewModel {
         });
     }
 
+    public void logOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
     String Name() {
         return (user != null) ? user.getName() : "User_Name";
     }
