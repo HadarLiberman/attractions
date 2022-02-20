@@ -1,16 +1,25 @@
 package com.example.attractionsapp;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.room.PrimaryKey;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -137,6 +146,40 @@ public class SignUpFragment extends Fragment {
         builder.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        profileImage.setImageBitmap(selectedImage);
+                        profileImage.setTag("img");
+                    }
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                profileImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                profileImage.setTag("img");
+                                cursor.close();
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+
 
     public void save() {
         Log.d("TAG","inside save");
@@ -169,13 +212,14 @@ public class SignUpFragment extends Fragment {
         user = new User(name_usr, email_usr, password_usr);
         Log.d("TAG","user that entered "+user.getEmail());
 
-
         Model.instance.addUser(user, () -> {
             Log.d("TAG","USER EMAIL "+email_usr);
             Snackbar mySnackbar = Snackbar.make(view, "signUp succeed, Nice to meet you :)", BaseTransientBottomBar.LENGTH_LONG);
             mySnackbar.show();
-            Navigation.findNavController(view).navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment(email_usr));
+//            Navigation.findNavController(view).navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment(email_usr));
         });
+
+        updateImage();
     }
 
 
@@ -195,5 +239,43 @@ public class SignUpFragment extends Fragment {
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
+
+    private void updateImage() {
+        BitmapDrawable drawable = (BitmapDrawable) profileImage.getDrawable();
+        Log.d("BITAG", drawable.toString());
+        Bitmap bitmap = drawable.getBitmap();
+        Model.instance.uploadUserImage(bitmap, user.getId(), new Model.UploadUserImageListener() {
+            @Override
+            public void onComplete(String url) {
+                if (url == null) {
+                    displayFailedError();
+                } else {
+                    user.setImageUrl(url);
+                    Model.instance.addUser(user, () -> {
+                        Navigation.findNavController(view).navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment(email_usr));
+                    });
+                }
+            }
+        });
+
+
+    }
+
+    private void displayFailedError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Operation Failed");
+        builder.setMessage("Saving image failed, please try again later...");
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+
+
+
 
 }

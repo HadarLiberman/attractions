@@ -1,5 +1,6 @@
 package com.example.attractionsapp.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 
@@ -170,6 +171,31 @@ public class Model {
     }
     public void setSignedUser(User signedUser) {
         this.signedUser = signedUser;
+    }
+
+    public interface SaveImageListener {
+        void onComplete(String url);
+    }
+
+    public void saveImage(Bitmap imageBitmap, String imageName, SaveImageListener listener) {
+        modelFirebase.saveImage(imageBitmap, imageName, listener);
+    }
+
+    public interface UploadImageListener {
+        void onComplete(String url);
+    }
+
+
+    public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener) {
+        modelFirebase.uploadImage(imageBmp, name, listener);
+    }
+
+    public interface UploadUserImageListener {
+        void onComplete(String url);
+    }
+
+    public void uploadUserImage(Bitmap imageBmp, String name, final UploadUserImageListener listener) {
+        modelFirebase.uploadUserImage(imageBmp, name, listener);
     }
 
 //    public List<Comment> getAllCommentsOnAttractionByAttractionIdAndUserId(String attractionId, String userId) {

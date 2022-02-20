@@ -3,7 +3,9 @@ package com.example.attractionsapp.Util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -64,16 +66,28 @@ public class SelectPhotoDialog extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        String picturePath;
         /*
             Results when selecting a new image from memory
          */
         if(requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             Uri selectedImageUri = data.getData();
-            Log.d(TAG, "onActivityResult: image uri: " + selectedImageUri);
 
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            if (selectedImageUri != null) {
+                Cursor cursor = getActivity().getContentResolver().query(selectedImageUri,
+                        filePathColumn, null, null, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                     picturePath = cursor.getString(columnIndex);
+                    mOnPhotoSelectedListener.getImageBitmap(BitmapFactory.decodeFile(picturePath));
+                    cursor.close();
+                }
+            }
+            Log.d(TAG, "onActivityResult: image uri: " + selectedImageUri);
             //send the uri to PostFragment & dismiss dialog
-            mOnPhotoSelectedListener.getImagePath(selectedImageUri);
+//            mOnPhotoSelectedListener.getImageBitmap(BitmapFactory.decodeFile(picturePath));
             getDialog().dismiss();
         }
         /*
@@ -83,7 +97,6 @@ public class SelectPhotoDialog extends DialogFragment {
             Log.d(TAG, "onActivityResult: done taking new photo");
             Bitmap bitmap;
             bitmap = (Bitmap) data.getExtras().get("data");
-
             //send the bitmap to PostFragment and dismiss dialog
             mOnPhotoSelectedListener.getImageBitmap(bitmap);
             getDialog().dismiss();

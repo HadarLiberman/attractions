@@ -1,8 +1,11 @@
 package com.example.attractionsapp;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,9 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
-public class CreateAttractionFragment extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener{
+public class CreateAttractionFragment extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
 
     private static final String TAG = "CreateAttractionFragment";
 
@@ -51,7 +52,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     @Override
     public void getImageBitmap(Bitmap bitmap) {
         Log.d(TAG, "getImageBitmap: setting the image to imageview");
-        uploadPhoto.setImageBitmap(bitmap);
         //assign to a global variable
         uri = null;
         this.bitmap = bitmap;
@@ -94,7 +94,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
 
         // hide keyboard
-        descEt.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        descEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -103,7 +103,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             }
         });
 
-        titleEt.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        titleEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -113,7 +113,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         });
 
         // create category spinner
-        final List<String> category=new ArrayList<String>();
+        final List<String> category = new ArrayList<String>();
         category.add("");
         category.add("Eating and Drinking");
         category.add("Trips");
@@ -122,18 +122,18 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         category.add("Gardens and Parks");
         category.add("Shopping");
 
-        ArrayAdapter<String> dataAdapter_category = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, category);
+        ArrayAdapter<String> dataAdapter_category = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, category);
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(dataAdapter_category);
 
         // create location spinner
-        final List<String> location =new ArrayList<String>();
+        final List<String> location = new ArrayList<String>();
         location.add("");
         location.add("South");
         location.add("Central Israel");
         location.add("North");
 
-        ArrayAdapter<String> dataAdapter_location = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, location);
+        ArrayAdapter<String> dataAdapter_location = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, location);
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(dataAdapter_location);
 
@@ -141,15 +141,25 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
         init();
 
-        saveBtn.setOnClickListener((v)->{
+        saveBtn.setOnClickListener((v) -> {
 
             isHasValues();
-            if (hasValues){
+            if (hasValues) {
                 Attraction attraction = save();
-                Model.instance.addAttraction(attraction,()->{
+                BitmapDrawable drawable = (BitmapDrawable) uploadPhoto.getDrawable();
+                Log.d("BITAG", drawable.toString());
+                Bitmap bitmap = drawable.getBitmap();
+                Model.instance.uploadImage(bitmap, user_id, new Model.UploadImageListener() {
+                    @Override
+                    public void onComplete(String url) {
+                        if (url == null) {
+                            displayFailedError();
+                        } else
+                            attraction.setUri(url.toString()); }
+                });
+                Model.instance.addAttraction(attraction, () -> {
                     Navigation.findNavController(v).navigateUp();
                 });
-//                Navigation.findNavController(v).navigateUp();
             }
 
         });
@@ -159,11 +169,9 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
 
     @SuppressLint("LongLogTag")
-    private Attraction save(){
-
+    private Attraction save() {
 
         Log.d(TAG, "onClick: attempting to post...");
-
 
         String title = titleEt.getText().toString();
         String desc = descEt.getText().toString();
@@ -172,10 +180,10 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
         String image = ""; // TODO add image
         Attraction newAttraction;
-        if(uri != null){
-            newAttraction = new Attraction(user_id,title,desc,category,location);
-        } else{
-            newAttraction = new Attraction(user_id,title,desc,category,location);
+        if (uri != null) {
+            newAttraction = new Attraction(user_id, title, desc, category, location, uri.toString());
+        } else {
+            newAttraction = new Attraction(user_id, title, desc, category, location, "");
         }
 
         Log.d("TAG", "added new attraction: " + newAttraction);
@@ -189,8 +197,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
-    private void init(){
-
+    private void init() {
         uploadPhoto.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
             @Override
@@ -203,19 +210,47 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         });
     }
 
+//    private void updateImage() {
+//        BitmapDrawable drawable = (BitmapDrawable) uploadPhoto.getDrawable();
+//        Log.d("BITAG", drawable.toString());
+//        Bitmap bitmap = drawable.getBitmap();
+//        Model.instance.uploadImage(bitmap, user_id, new Model.UploadUserImageListener() {
+//            @Override
+//            public void onComplete(String url) {
+//                if (url == null) {
+//                    displayFailedError();
+//                } else
+//                    attraction.setImageUrl(url); }
+//        });
+//    }
 
-    private boolean isEmpty(String string){
+        private void displayFailedError(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Operation Failed");
+            builder.setMessage("Saving image failed, please try again later...");
+            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.show();
+        }
+
+
+
+        private boolean isEmpty(String string) {
         return string.equals("");
     }
 
-    private void isHasValues(){
-        if(!isEmpty(titleEt.getText().toString())
+    private void isHasValues() {
+        if (!isEmpty(titleEt.getText().toString())
                 && !isEmpty(descEt.getText().toString())
                 && !isEmpty(locationSpinner.getSelectedItem().toString())
                 && !isEmpty(categorySpinner.getSelectedItem().toString())
-                &&  (bitmap != null || uri != null)){
+                && (bitmap != null || uri != null)) {
             hasValues = true;
-        }else{
+        } else {
             Toast.makeText(getActivity(), "You must fill out all the fields", Toast.LENGTH_SHORT).show();
         }
     }

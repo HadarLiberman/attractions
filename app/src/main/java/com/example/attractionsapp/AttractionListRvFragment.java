@@ -157,11 +157,8 @@ public class AttractionListRvFragment extends Fragment {
             if(!(attraction.getUserId().equals(user_id))){
                 holder.mypost.setVisibility(View.INVISIBLE);
             }
-//            if(attraction.getUri() != null){
-//                holder.imagev.setImageURI(attraction.getUri());
-//            }else if(attraction.getBitmap() != null){
-//                holder.imagev.setImageBitmap(attraction.getBitmap());
-//            }
+            if(attraction.getUri() != null){
+                holder.imagev.setImageURI(attraction.getUri());
         }
 
         @Override

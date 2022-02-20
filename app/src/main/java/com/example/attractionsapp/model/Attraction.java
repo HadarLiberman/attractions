@@ -43,7 +43,8 @@ public class Attraction {
     String desc = "";
     String category = "";
     String location = "";
-    Long updateDate=new Long(0);
+    Long updateDate = new Long(0);
+    String uri;
 
     //Uri uri = null;
     //Bitmap bitmap = null;
@@ -54,8 +55,9 @@ public class Attraction {
 
     public Attraction() {
     }
+
     @Ignore
-    public Attraction(String userId, String title, String desc, String category, String location) {
+    public Attraction(String userId, String title, String desc, String category, String location, String uri) {
         //this.id = String.valueOf((userId + " " + title).hashCode());
         UUID uuid = UUID.randomUUID();
         this.id = uuid.toString();
@@ -64,17 +66,19 @@ public class Attraction {
         this.desc = desc;
         this.category = category;
         this.location = location;
-        //this.uri = uri;
+        this.uri = uri;
         //this.bitmap = bitmap;
     }
+
     @Ignore
-    public Attraction(String id,String userId, String title, String desc, String category, String location) {
+    public Attraction(String id, String userId, String title, String desc, String category, String location, String uri) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.desc = desc;
         this.category = category;
         this.location = location;
+        this.uri = uri;
     }
 
 
@@ -130,13 +134,13 @@ public class Attraction {
         this.location = location;
     }
 
-//    public Uri getUri() {
-//        return uri;
-//    }
-//
-//    public void setUri(Uri uri) {
-//        this.uri = uri;
-//    }
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 //
 //    public Bitmap getBitmap() {
 //        return bitmap;
@@ -156,6 +160,7 @@ public class Attraction {
         json.put(CATEGORY, category);
         json.put(LOCATION, location);
         json.put(UPDATEDATE, FieldValue.serverTimestamp());
+        json.put(URI, uri);
 
         //json.put(URI, uri);
         //json.put(BITMAP, bitmap);
@@ -170,12 +175,11 @@ public class Attraction {
         String category = (String) json.get(CATEGORY);
         String location = (String) json.get(LOCATION);
         Timestamp ts = (Timestamp) json.get(UPDATEDATE);
-        Long updateDate =ts.getSeconds();
+        Long updateDate = ts.getSeconds();
+        String uri = (String) json.get(URI);
+        // Bitmap bitmap = (Bitmap) json.get(BITMAP);
 
-        //Uri uri = (Uri) json.get(URI);
-       // Bitmap bitmap = (Bitmap) json.get(BITMAP);
-
-        Attraction attraction = new Attraction(id,userId, title, desc, category, location);
+        Attraction attraction = new Attraction(id, userId, title, desc, category, location, uri);
         attraction.setUpdateDate(updateDate);
 
         return attraction;
@@ -186,8 +190,8 @@ public class Attraction {
     }
 }
 
-   // public ImageView getImageView() { return imageView; }
+// public ImageView getImageView() { return imageView; }
 
-    // public void setImageView(ImageView imageView) { this.imageView = imageView; }
+// public void setImageView(ImageView imageView) { this.imageView = imageView; }
 
 
