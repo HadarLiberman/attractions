@@ -54,32 +54,25 @@ public class Model {
 
 
     List<Attraction> data = new LinkedList<>();
-    List<Comment> comments = new LinkedList<>();
+
 
     MutableLiveData<List<Attraction>> attractionsList=new MutableLiveData<List<Attraction>>();
     public LiveData<List<Attraction>> getAll(){
         if(attractionsList.getValue()==null) {
-            refreshAttractionList();
+            refreshAttractionList("");
         }
         return attractionsList;
     }
 
-//    MutableLiveData<List<Comment>> commentsList=new MutableLiveData<List<Comment>>();
-//    public LiveData<List<Comment>> getAllComments(){
-//        if(commentsList.getValue()==null) {
-//            refreshCommentsList();
-//        }
-//        return commentsList;
-//    }
 
-    public void refreshAttractionList() {
+    public void refreshAttractionList(String category) {
         attrationListLoadingStage.setValue(AttrationListLoadingStage.loading);
 
         // get last local update date
         Long lastUpdateDate = MyApplication.getContext().getSharedPreferences("TAG", Context.MODE_PRIVATE).getLong("AttractionsLastUpdateDate",0);
 
 
-        modelFirebase.getAttractions(lastUpdateDate, new ModelFirebase.GetAttractionsListener() {
+        modelFirebase.getAttractions(lastUpdateDate,category, new ModelFirebase.GetAttractionsListener() {
             @Override
             public void onComplete(List<Attraction> list) {
                 executor.execute(new Runnable() {
@@ -98,6 +91,9 @@ public class Model {
                                 .putLong("AttractionsLastUpdateDate",lud)
                                 .commit();
                         List<Attraction> atList=AppLocalDb.db.attractionDao().getAll();
+                        Log.d("TAG","room "+atList.toString());
+                        Log.d("TAG","stage  "+AttrationListLoadingStage.loaded);
+
                         attractionsList.postValue(atList);
                         attrationListLoadingStage.postValue(AttrationListLoadingStage.loaded);
 
@@ -122,9 +118,6 @@ public class Model {
         modelFirebase.updateAttraction(attraction, listener);
     }
 
-//    public void deleteAttraction(final String attractionID) {
-//        modelFirebase.delete(attractionID);
-//    }
 public void deleteAttraction(final Attraction attraction) {
 //    modelFirebase.delete(attraction);
     AppLocalDb.db.attractionDao().delete(attraction);
@@ -162,14 +155,7 @@ public void deleteAttraction(final Attraction attraction) {
         void onComplete();
     }
 
-    public void addComment(final Comment comment, final AddCommentListener listener) {
-        modelFirebase.addComment(comment, new AddCommentListener() {
-            @Override
-            public void onComplete() {
-                listener.onComplete();
-            }
-        });
-    }
+
 
 //
 //    public interface UpdateUserListener {

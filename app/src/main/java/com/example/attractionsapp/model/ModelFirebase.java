@@ -36,7 +36,6 @@ import java.util.UUID;
 
 public class ModelFirebase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DatabaseReference comments = FirebaseDatabase.getInstance().getReference().child("Comments");
 
 
     public ModelFirebase() {
@@ -52,9 +51,9 @@ public class ModelFirebase {
         void onComplete(List<Attraction> list);
     }
 
-    public void getAttractions(Long lastUpdateDate, GetAttractionsListener listener) {
+    public void getAttractions(Long lastUpdateDate,String selected_category, GetAttractionsListener listener) {
         db.collection(Attraction.COLLECTION_NAME)
-//             .whereGreaterThanOrEqualTo("updateDate",new Timestamp(lastUpdateDate,0))
+                .whereEqualTo("category",selected_category)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -170,24 +169,7 @@ public class ModelFirebase {
         });
     }
 
-    public interface GetAllCommentsListener {
-        void onComplete(List<Comment> list);
-    }
 
-    public void getAllComments(final GetAllCommentsListener listener) {
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("comments").get().addOnCompleteListener(task -> {
-            List<Comment> data = new ArrayList<>();
-            if (task.isSuccessful()) {
-                for (DocumentSnapshot doc : task.getResult()) {
-                    Comment comment = new Comment();
-                    comment.fromMap(doc.getData());
-                    data.add(comment);
-                }
-            }
-            listener.onComplete(data);
-        });
-    }
 
     public void uploadImage(Bitmap imageBmp, String name, final Model.UploadImageListener listener){
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -286,37 +268,6 @@ public class ModelFirebase {
                 });
     }
 
-    public void addComment(Comment comment, Model.AddCommentListener listener) {
-        db.collection(Comment.COLLECTION_NAME).document(comment.getUserId())
-                .set(comment.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("TAG", "user added successfully");
-                listener.onComplete();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("TAG", "fail adding comment");
-                listener.onComplete();
-            }
-        });
-    }
-
-    public List<Comment> getAllCommentsOnAttraction(String attractionId){
-        List<Comment> result = new LinkedList<>();
-        getAllComments(new GetAllCommentsListener() {
-            @Override
-            public void onComplete(List<Comment> list) {
-                for (Comment com: list) {
-                    if(com.getAttractionId().equals(attractionId)){
-                        result.add(com);
-                    }
-                }
-            }
-        });
-        return result;
-    }
 
 
     public void addUser(User user, final Model.AddUserListener listener) {

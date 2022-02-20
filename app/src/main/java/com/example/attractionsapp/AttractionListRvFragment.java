@@ -57,7 +57,7 @@ public class AttractionListRvFragment extends Fragment {
 
 
         swipeRefresh = view.findViewById(R.id.attractionlist_swiperefresh);
-        swipeRefresh.setOnRefreshListener(() -> Model.instance.refreshAttractionList());
+        swipeRefresh.setOnRefreshListener(() -> Model.instance.refreshAttractionList(selected_category));
         RecyclerView list = view.findViewById(R.id.attraction_list_rv);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,6 +78,7 @@ public class AttractionListRvFragment extends Fragment {
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment(user_id)));
 
         viewModel.getData().observe(getViewLifecycleOwner(), list1 -> {
+            Log.d("TAG",list1.toString());
 
             refresh();
 
@@ -153,16 +154,18 @@ public class AttractionListRvFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             Attraction attraction = viewModel.getData().getValue().get(position);
-            holder.titleTv.setText(attraction.getTitle());
-            holder.decsTv.setText(attraction.getDesc());
-            if (!(attraction.getUserId().equals(user_id))) {
-                holder.mypost.setVisibility(View.INVISIBLE);
-            }
-            if (attraction.getUri() != null) {
-                Picasso.get()
-                        .load(attraction.getUri())
-                        .into(imagev);
-            }
+                holder.titleTv.setText(attraction.getTitle());
+                holder.decsTv.setText(attraction.getDesc());
+                if (!(attraction.getUserId().equals(user_id))) {
+                    holder.mypost.setVisibility(View.INVISIBLE);
+                }
+                if (attraction.getUri() != null) {
+                    Picasso.get()
+                            .load(attraction.getUri())
+                            .into(imagev);
+                }
+
+
 
         }
 
