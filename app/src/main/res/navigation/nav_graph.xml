@@ -111,5 +111,17 @@
         <action
             android:id="@+id/action_userProfileFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.attractionsapp.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
 </navigation>

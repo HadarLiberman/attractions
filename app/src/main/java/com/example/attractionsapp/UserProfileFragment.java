@@ -32,13 +32,15 @@ public class UserProfileFragment extends Fragment {
     ImageView profileImage;
     EditText nameEdit;
     Button logoutBtn;
+    String user_id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
         view = inflater.inflate(R.layout.fragment_user_profile, container, false);
-        String user_id = HomeFragmentArgs.fromBundle(getArguments()).getUserId();
+        user_id = HomeFragmentArgs.fromBundle(getArguments()).getUserId();
         editBtn = view.findViewById(R.id.profileF_editInfoBtn);
         name = view.findViewById(R.id.profileF_name);
         email = view.findViewById(R.id.profileF_mail);
@@ -47,29 +49,27 @@ public class UserProfileFragment extends Fragment {
         logoutBtn=view.findViewById(R.id.profile_logout_btn);
         profileImage = view.findViewById(R.id.profile_imageView);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        userViewModel.getUser(new UserViewModel.GetUserListener() {
+        userViewModel.getUserById(user_id, new UserViewModel.GetUserListener() {
             @Override
             public void onComplete(User user) {
-                curUser=user;
-
-                name.setText((user!=null)?user.getName():null);
-                email.setText((user!=null)?user.getEmail():null);
-
-//                if(user.getImageUrl()!=null) {
-//                    Picasso.get().load(user.getImageUrl()).into(profileImage);
-//                    profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                    profileImage.setClipToOutline(true);
-//                }
-
+                curUser = user;
+                name.setText((user != null) ? user_id : null);
+                email.setText((user != null) ? user.getEmail() : null);
+                if (user.getImageUrl() != null) {
+                    Picasso.get()
+                            .load(user.getImageUrl())
+                            .into(profileImage);
+                }
             }
         });
+
         logoutBtn.setOnClickListener((v)->{
             userViewModel.logOut();
             Navigation.findNavController(v).navigate(UserProfileFragmentDirections.actionUserProfileFragmentToLogInFragment());
         });
 
         editBtn.setOnClickListener((v)->{
-
+//            Navigation.findNavController(v).navigate(UserProfileFragmentDirections.actionUserProfileFragmentToEditProfileFragment(user_id));
             save();
         });
 
@@ -77,12 +77,13 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void save() {
-        curUser.setName(nameEdit.getText().toString());
-        Model.instance.updateUser(curUser, new Model.UpdateUserListener() {
+        curUser.setName("changing");
+        Model.instance.addUser(curUser, new Model.AddUserListener() {
             @Override
             public void onComplete() {
                 Snackbar mySnackbar = Snackbar.make(view, "update succeed :)", BaseTransientBottomBar.LENGTH_LONG);
                 mySnackbar.show();
+                Navigation.findNavController(view).navigateUp();
             }
 
         });

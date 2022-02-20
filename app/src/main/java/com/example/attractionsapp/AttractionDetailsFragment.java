@@ -58,7 +58,7 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
         RecyclerView list = view.findViewById(R.id.details_comments_list_rv);
@@ -71,9 +71,6 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
         user_id = AttractionDetailsFragmentArgs.fromBundle(getArguments()).getUserId();
         comments = Model.instance.modelFirebase.getAllCommentsOnAttraction(attractionId);
 
-        Log.d("TAG", "user recived email from att list " + user_id);
-        Log.d("TAG", "attractionId" + attractionId);
-
         Model.instance.getAttractionById(attractionId, new Model.GetAttractionById() {
             @Override
             public void onComplete(Attraction attraction) {
@@ -84,9 +81,6 @@ public class AttractionDetailsFragment extends Fragment implements DeleteAttract
                 descTv.setText(attraction.getDesc());
                 locationTv.setText(attraction.getLocation());
                 categoryTv.setText(attraction.getCategory());
-                Log.d("TAG", "USER ID FROM ATRR " + attraction.getUserId());
-                Log.d("TAG", "USER ID FROM NAV " + user_id);
-                Log.d("TAG", "res " + (attraction.getUserId() != user_id));
 
                 if (!attraction.getUserId().equals(user_id)) {
                     editBtn.setVisibility(View.INVISIBLE);

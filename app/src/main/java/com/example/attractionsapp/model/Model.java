@@ -1,5 +1,6 @@
 package com.example.attractionsapp.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 
@@ -146,10 +147,15 @@ public void deleteAttraction(final Attraction attraction) {
         modelFirebase.addUser(user, new AddUserListener() {
             @Override
             public void onComplete() {
-                setSignedUser(user);
+
+//                setSignedUser(user);
                 listener.onComplete();
             }
         });
+    }
+
+    public void updateUser(final User user, final AddUserListener listener) {
+        modelFirebase.updateUser(user, listener);
     }
 
     public interface AddCommentListener {
@@ -165,16 +171,46 @@ public void deleteAttraction(final Attraction attraction) {
         });
     }
 
+//
+//    public interface UpdateUserListener {
+//        void onComplete();
+//    }
+//    public void updateUser1(final User user, final AddUserListener listener) {
+//        modelFirebase.updateUser(user, listener);
+//    }
 
-    public interface UpdateUserListener {
-        void onComplete();
-    }
-    public void updateUser1(final User user, final AddUserListener listener) {
-        modelFirebase.updateUser(user, listener);
+
+    public interface UploadImageListener {
+        void onComplete(String url);
     }
 
-    public void updateUser(final User user, final UpdateUserListener listener) {
-        modelFirebase.updateUser(user, listener);
+
+
+    public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener) {
+        modelFirebase.uploadImage(imageBmp, name, listener);
+    }
+
+    public interface UploadUserImageListener {
+        void onComplete(String url);
+    }
+
+    public void uploadUserImage(Bitmap imageBmp, String name, final UploadUserImageListener listener) {
+        modelFirebase.uploadUserImage(imageBmp, name, listener);
+    }
+
+
+
+    public interface SaveImageListener {
+        void onComplete(String url);
+    }
+
+
+    public void saveImage(Bitmap imageBitmap, String imageName, SaveImageListener listener) {
+        modelFirebase.saveImage(imageBitmap, imageName, listener);
+    }
+
+    public void saveImageAttr(Bitmap imageBitmap, String imageName, SaveImageListener listener) {
+        modelFirebase.saveImageAttr(imageBitmap, imageName, listener);
     }
 
     public User getSignedUser() {

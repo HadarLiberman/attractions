@@ -28,6 +28,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,11 +43,12 @@ public class AttractionListRvFragment extends Fragment {
     String user_id;
     String selected_category;
     Context context;
+    ImageView imagev;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        viewModel=new ViewModelProvider(this).get(AttractionListRvViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AttractionListRvViewModel.class);
     }
 
 //    @Override
@@ -59,15 +61,15 @@ public class AttractionListRvFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_attractions_list_rv,container,false);
+        View view = inflater.inflate(R.layout.fragment_attractions_list_rv, container, false);
         user_id = AttractionListRvFragmentArgs.fromBundle(getArguments()).getUserId();
         selected_category = AttractionListRvFragmentArgs.fromBundle(getArguments()).getSelectedCategory();
 
-        Log.d("TAG","user recived email from att home "+user_id);
-        Log.d("TAG","SELECTED CATEGORY : "+ selected_category);
+        Log.d("TAG", "user recived email from att home " + user_id);
+        Log.d("TAG", "SELECTED CATEGORY : " + selected_category);
 
-        swipeRefresh= view.findViewById(R.id.attractionlist_swiperefresh);
-        swipeRefresh.setOnRefreshListener(()->Model.instance.refreshAttractionList());
+        swipeRefresh = view.findViewById(R.id.attractionlist_swiperefresh);
+        swipeRefresh.setOnRefreshListener(() -> Model.instance.refreshAttractionList());
         RecyclerView list = view.findViewById(R.id.attraction_list_rv);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -80,34 +82,35 @@ public class AttractionListRvFragment extends Fragment {
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(View v,int position) {
+            public void onItemClick(View v, int position) {
                 String stId = viewModel.getData().getValue().get(position).getId();
-                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId,user_id));
+                Navigation.findNavController(v).navigate(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToAttractionDetailsFragment(stId, user_id));
             }
         });
 
         Button add = view.findViewById(R.id.userlistrv_addAttraction_btn);
         add.setOnClickListener(Navigation.createNavigateOnClickListener(AttractionListRvFragmentDirections.actionUserAttractionListRvFragmentToCreateAttractionFragment(user_id)));
 
-        viewModel.getData().observe(getViewLifecycleOwner(),list1-> {
+        viewModel.getData().observe(getViewLifecycleOwner(), list1 -> {
 
             refresh();
 
 
         });
-        swipeRefresh.setRefreshing(Model.instance.getAttrationListLoadingStage().getValue()==Model.AttrationListLoadingStage.loading);
+        swipeRefresh.setRefreshing(Model.instance.getAttrationListLoadingStage().getValue() == Model.AttrationListLoadingStage.loading);
         Model.instance.getAttrationListLoadingStage().observe(getViewLifecycleOwner(), attrationListLoadingStage -> {
-         if (attrationListLoadingStage==Model.AttrationListLoadingStage.loading){
-            swipeRefresh.setRefreshing(true);
-         }else{
-            swipeRefresh.setRefreshing(false);
-         }
+            if (attrationListLoadingStage == Model.AttrationListLoadingStage.loading) {
+                swipeRefresh.setRefreshing(true);
+            } else {
+                swipeRefresh.setRefreshing(false);
+            }
 
         });
 
 
         return view;
     }
+
     public void refresh() {
         adapter.notifyDataSetChanged();
         swipeRefresh.setRefreshing(false);
@@ -121,10 +124,10 @@ public class AttractionListRvFragment extends Fragment {
 
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView titleTv;
         TextView decsTv;
-        ImageView imagev;
+
         public TextView mypost;
 
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
@@ -141,20 +144,38 @@ public class AttractionListRvFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    listener.onItemClick(v,pos);
+                    listener.onItemClick(v, pos);
                 }
             });
-
         }
+
+//        public void bind(Attraction attraction) {
+//
+//                titleTv.setText(attraction.getTitle());
+//                decsTv.setText(attraction.getDesc());
+//                imagev.setImageResource(R.drawable.south);
+//                if (!(attraction.getUserId().equals(user_id))) {
+//                    mypost.setVisibility(View.INVISIBLE);
+//                }
+//                Log.d("TAG", "urlllll" + attraction.getUri());
+//                if (attraction.getUri() != null) {
+//                    Picasso.get()
+//                            .load(attraction.getUri())
+//                            .into(imagev);
+//                }
+//            }
+//
     }
 
-    interface OnItemClickListener{
-        void onItemClick(View v,int position);
+
+    interface OnItemClickListener {
+        void onItemClick(View v, int position);
     }
 
-    class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
+    class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         OnItemClickListener listener;
-        public void setOnItemClickListener(OnItemClickListener listener){
+
+        public void setOnItemClickListener(OnItemClickListener listener) {
             this.listener = listener;
         }
 
@@ -162,8 +183,8 @@ public class AttractionListRvFragment extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.attraction_list_row,parent,false);
-            MyViewHolder holder = new MyViewHolder(view , listener);
+            View view = getLayoutInflater().inflate(R.layout.attraction_list_row, parent, false);
+            MyViewHolder holder = new MyViewHolder(view, listener);
             return holder;
         }
 
@@ -171,30 +192,22 @@ public class AttractionListRvFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             Attraction attraction = viewModel.getData().getValue().get(position);
+//            holder.bind(attraction);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
-            if(!(attraction.getUserId().equals(user_id))){
+            if (!(attraction.getUserId().equals(user_id))) {
                 holder.mypost.setVisibility(View.INVISIBLE);
             }
-            if(attraction.getUri() != null){
-
-                Bitmap bitmap = null;//from   w  ww  . j  a  v  a2s.  c om
-                try {
-                    bitmap = BitmapFactory.decodeStream(context
-                            .getContentResolver().openInputStream(Uri.parse(attraction.getUri())));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-
-                }
-
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(attraction.getUri()));
-//
-//                Bitmap bitmap = getThumbnail(Uri.parse(attraction.getUri()));
-                holder.imagev.setImageBitmap(bitmap);
-
-//                holder.imagev.setImageURI(Uri.parse(attraction.getUri()) );
+            if (attraction.getUri() != null) {
+                Picasso.get()
+                        .load(attraction.getUri())
+                        .into(imagev);
             }
+
         }
+
+
+
 
 
 

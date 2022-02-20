@@ -3,6 +3,7 @@ package com.example.attractionsapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -12,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.example.attractionsapp.model.User;
+import com.squareup.picasso.Picasso;
 
 
 public class HomeFragment extends Fragment {
@@ -30,6 +34,7 @@ public class HomeFragment extends Fragment {
     ImageButton btn8;
 
     ImageView profile;
+    UserViewModel userViewModel;
 
 
     public HomeFragment() {
@@ -63,6 +68,19 @@ public class HomeFragment extends Fragment {
         btn6.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("North",user_id)));
         btn7.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("Central Israel",user_id)));
         btn8.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToAttractionListRvFragment("South",user_id)));
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getUserById(user_id, new UserViewModel.GetUserListener() {
+            @Override
+            public void onComplete(User user) {
+
+                if (user.getImageUrl() != null) {
+                    Picasso.get()
+                            .load(user.getImageUrl())
+                            .into(profile);
+                }
+            }
+        });
 
         profile.setOnClickListener(Navigation.createNavigateOnClickListener(HomeFragmentDirections.actionHomeFragmentToUserProfileFragment(user_id)));
 
