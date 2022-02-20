@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         String user_id = HomeFragmentArgs.fromBundle(getArguments()).getUserId();
         profile=view.findViewById(R.id.home_profile_imv);

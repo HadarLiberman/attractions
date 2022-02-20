@@ -42,7 +42,10 @@ public class LogInFragment extends Fragment {
 
     ActionCodeSettings actionCodeSettings =
             ActionCodeSettings.newBuilder()
+                    // URL you want to redirect back to. The domain (www.example.com) for this
+                    // URL must be whitelisted in the Firebase Console.
                     .setUrl("https://www.example.com/finishSignUp")
+                    // This must be true
                     .setHandleCodeInApp(true)
                     .setIOSBundleId("com.example.ios")
                     .setAndroidPackageName(
@@ -55,6 +58,7 @@ public class LogInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
         email_et = view.findViewById(R.id.login_email_edt);
@@ -67,6 +71,7 @@ public class LogInFragment extends Fragment {
         signup_btn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(LogInFragmentDirections.actionLogInFragmentToSignUpFragment());
         });
+
         email_et.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -75,6 +80,7 @@ public class LogInFragment extends Fragment {
                 }
             }
         });
+
         password_et.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -83,6 +89,7 @@ public class LogInFragment extends Fragment {
                 }
             }
         });
+
         return view;
     }
 
@@ -98,12 +105,21 @@ public class LogInFragment extends Fragment {
             password_et.setError("please enter correct  password");
             return;
         }
+        Log.d("TAG","USER EMAIL "+email_user);
+        Log.d("TAG","USER PAA "+password_user);
 
-
+        //authenticate the user
         mAuth.signInWithEmailAndPassword(email_user, password_user).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+//                    signIn_btn.setEnabled(false);
+//                    signUp_btn.setEnabled(false);
+//                    forgotP_btn.setEnabled(false);
+//                    pb.setVisibility(View.INVISIBLE);
+                    Log.d("TAG","USER EMAIL "+email_user);
+                    Log.d("TAG","USER PAA "+password_user);
 
                     mySnackbar = Snackbar.make(view, "Login successful :)", BaseTransientBottomBar.LENGTH_LONG);
                     mySnackbar.show();
@@ -111,10 +127,11 @@ public class LogInFragment extends Fragment {
 
                     Navigation.findNavController(view).navigate(LogInFragmentDirections.actionLogInFragmentToHomeFragment(email_user));
                 } else
-
+                    //Log.d("TAG","Login failed");
                     Toast.makeText(getContext(), "Error! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
+//                pb.setVisibility(View.INVISIBLE);
             }
+
         });
     }
 

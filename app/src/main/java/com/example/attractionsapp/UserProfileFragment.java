@@ -53,7 +53,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onComplete(User user) {
                 curUser = user;
-                name.setText((user != null) ? user_id : null);
+                name.setText((user != null) ? user.getName() : null);
                 email.setText((user != null) ? user.getEmail() : null);
                 if (user.getImageUrl() != null) {
                     Picasso.get()
@@ -77,7 +77,7 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void save() {
-        curUser.setName("changing");
+        curUser.setName(nameEdit.getText().toString());
         Model.instance.addUser(curUser, new Model.AddUserListener() {
             @Override
             public void onComplete() {

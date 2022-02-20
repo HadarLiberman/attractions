@@ -30,10 +30,6 @@ import com.example.attractionsapp.model.Attraction;
 import com.example.attractionsapp.model.Model;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 public class AttractionListRvFragment extends Fragment {
 
@@ -42,7 +38,7 @@ public class AttractionListRvFragment extends Fragment {
     SwipeRefreshLayout swipeRefresh;
     String user_id;
     String selected_category;
-    Context context;
+
     ImageView imagev;
 
     @Override
@@ -51,12 +47,6 @@ public class AttractionListRvFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(AttractionListRvViewModel.class);
     }
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        Model.instance.refreshAttractionList();
-//
-//    }
 
     @Nullable
     @Override
@@ -65,8 +55,6 @@ public class AttractionListRvFragment extends Fragment {
         user_id = AttractionListRvFragmentArgs.fromBundle(getArguments()).getUserId();
         selected_category = AttractionListRvFragmentArgs.fromBundle(getArguments()).getSelectedCategory();
 
-        Log.d("TAG", "user recived email from att home " + user_id);
-        Log.d("TAG", "SELECTED CATEGORY : " + selected_category);
 
         swipeRefresh = view.findViewById(R.id.attractionlist_swiperefresh);
         swipeRefresh.setOnRefreshListener(() -> Model.instance.refreshAttractionList());
@@ -74,8 +62,6 @@ public class AttractionListRvFragment extends Fragment {
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-//         MyAdapter adapter = new MyAdapter();
-//         adapter.notifyDataSetChanged();
         adapter = new MyAdapter();
         list.setAdapter(adapter);
 
@@ -114,13 +100,6 @@ public class AttractionListRvFragment extends Fragment {
     public void refresh() {
         adapter.notifyDataSetChanged();
         swipeRefresh.setRefreshing(false);
-//        Model.instance.getAttractions((list)->{
-//            Log.d("list---------------", list.toString());
-//            viewModel.setData(list);
-//            adapter.notifyDataSetChanged();
-//            swipeRefresh.setRefreshing(false);
-//
-//        });
 
     }
 
@@ -133,7 +112,7 @@ public class AttractionListRvFragment extends Fragment {
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
-            //Update values for the new row
+
             titleTv = itemView.findViewById(R.id.row_name_tv);
             decsTv = itemView.findViewById(R.id.row_desc_tv);
             imagev = itemView.findViewById(R.id.row_image_imv);
@@ -148,23 +127,6 @@ public class AttractionListRvFragment extends Fragment {
                 }
             });
         }
-
-//        public void bind(Attraction attraction) {
-//
-//                titleTv.setText(attraction.getTitle());
-//                decsTv.setText(attraction.getDesc());
-//                imagev.setImageResource(R.drawable.south);
-//                if (!(attraction.getUserId().equals(user_id))) {
-//                    mypost.setVisibility(View.INVISIBLE);
-//                }
-//                Log.d("TAG", "urlllll" + attraction.getUri());
-//                if (attraction.getUri() != null) {
-//                    Picasso.get()
-//                            .load(attraction.getUri())
-//                            .into(imagev);
-//                }
-//            }
-//
     }
 
 
@@ -179,7 +141,6 @@ public class AttractionListRvFragment extends Fragment {
             this.listener = listener;
         }
 
-        //create row object
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -192,7 +153,6 @@ public class AttractionListRvFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             Attraction attraction = viewModel.getData().getValue().get(position);
-//            holder.bind(attraction);
             holder.titleTv.setText(attraction.getTitle());
             holder.decsTv.setText(attraction.getDesc());
             if (!(attraction.getUserId().equals(user_id))) {

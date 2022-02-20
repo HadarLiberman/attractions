@@ -43,13 +43,11 @@ import java.util.List;
 
 public class CreateAttractionFragment extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener{
 
-    private static final String TAG = "CreateAttractionFragment";
 
     @SuppressLint("LongLogTag")
     @Override
     public void getImagePath(Uri imagePath) {
-        Log.d(TAG, "getImagePath: setting the image to imageview with uri");
-        //assign to global variable
+
         bitmap = null;
         uri = imagePath;
         uploadPhoto.setImageURI(imagePath);
@@ -58,9 +56,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     @SuppressLint("LongLogTag")
     @Override
     public void getImageBitmap(Bitmap bitmap) {
-        Log.d(TAG, "getImageBitmap: setting the image to imageview");
         uploadPhoto.setImageBitmap(bitmap);
-        //assign to a global variable
         uri = null;
         this.bitmap = bitmap;
         uploadPhoto.setImageBitmap(bitmap);
@@ -80,7 +76,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     ImageButton camera_btn;
     Bitmap imageBitmap;
 
-    //vars
+
     private Bitmap bitmap = null;
     private Uri uri = null;
     private boolean hasValues = false;
@@ -92,7 +88,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_create_attraction, container, false);
-        //data = Model.instance.getAttractions();
         user_id = CreateAttractionFragmentArgs.fromBundle(getArguments()).getUserId();
 
 
@@ -107,7 +102,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         gallery_btn=view.findViewById(R.id.main_gallery_btn);
         camera_btn=view.findViewById(R.id.main_camera_btn);
 
-        // hide keyboard
+
         descEt.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -126,7 +121,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             }
         });
 
-        // create category spinner
         final List<String> category=new ArrayList<String>();
         category.add("");
         category.add("Eating and Drinking");
@@ -140,7 +134,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         dataAdapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(dataAdapter_category);
 
-        // create location spinner
         final List<String> location =new ArrayList<String>();
         location.add("");
         location.add("South");
@@ -164,8 +157,8 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         });
         saveBtn.setOnClickListener((v)->{
 
-//            isHasValues();
-//            if (hasValues) {
+            isHasValues();
+            if (hasValues) {
                 Attraction attraction = save();
                 if (imageBitmap == null) {
                     Model.instance.addAttraction(attraction, () -> {
@@ -176,7 +169,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
                     Model.instance.saveImageAttr(imageBitmap, attraction.getId() + ".jpg", url -> {
                         attraction.setUri(url);
                         Model.instance.addAttraction(attraction, () -> {
-                            Snackbar mySnackbar = Snackbar.make(view, "signUp succeed, Nice to meet you :)", BaseTransientBottomBar.LENGTH_LONG);
+                            Snackbar mySnackbar = Snackbar.make(view, "attraction added", BaseTransientBottomBar.LENGTH_LONG);
                             mySnackbar.show();
                             Navigation.findNavController(view).navigateUp();
                         });
@@ -185,7 +178,7 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
 
                 }
 
-
+            }
         });
 
         return view;
@@ -219,15 +212,11 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
     private Attraction save(){
 
 
-        Log.d(TAG, "onClick: attempting to post...");
-
-
         String title = titleEt.getText().toString();
         String desc = descEt.getText().toString();
         String location = locationSpinner.getSelectedItem().toString();
         String category = categorySpinner.getSelectedItem().toString();
 
-        String image = ""; // TODO add image
         Attraction newAttraction;
         if(uri != null){
             newAttraction = new Attraction(user_id,title,desc,category,location,uri.toString());
@@ -235,9 +224,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             newAttraction = new Attraction(user_id,title,desc,category,location,"");
         }
 
-
-
-        Log.d("TAG", "added new attraction: " + newAttraction);
 
         return newAttraction;
 
@@ -256,7 +242,6 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: opening dialog to choose new photo");
                 SelectPhotoDialog dialog = new SelectPhotoDialog();
                 dialog.show(getFragmentManager(), "SelectPhoto");
                 dialog.setTargetFragment(CreateAttractionFragment.this, 1);
@@ -273,8 +258,8 @@ public class CreateAttractionFragment extends Fragment implements SelectPhotoDia
         if(!isEmpty(titleEt.getText().toString())
                 && !isEmpty(descEt.getText().toString())
                 && !isEmpty(locationSpinner.getSelectedItem().toString())
-                && !isEmpty(categorySpinner.getSelectedItem().toString())
-                &&  (bitmap != null || uri != null)){
+                && !isEmpty(categorySpinner.getSelectedItem().toString()))
+               {
             hasValues = true;
         }else{
             Toast.makeText(getActivity(), "You must fill out all the fields", Toast.LENGTH_SHORT).show();

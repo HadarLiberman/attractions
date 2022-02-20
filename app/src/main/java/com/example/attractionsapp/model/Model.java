@@ -148,7 +148,7 @@ public void deleteAttraction(final Attraction attraction) {
             @Override
             public void onComplete() {
 
-//                setSignedUser(user);
+                setSignedUser(user);
                 listener.onComplete();
             }
         });

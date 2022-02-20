@@ -120,48 +120,39 @@
 
     <ImageButton
         android:id="@+id/main_gallery_btn"
-        android:layout_width="77dp"
-        android:layout_height="38dp"
+        android:layout_width="104dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="37dp"
         android:src="@android:drawable/ic_menu_gallery"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/createAttraction_location_spinner" />
 
     <ImageButton
         android:id="@+id/main_camera_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="28dp"
         android:src="@android:drawable/ic_menu_camera"
         app:layout_constraintEnd_toEndOf="@+id/main_gallery_btn"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/main_gallery_btn"
         app:layout_constraintTop_toBottomOf="@+id/main_gallery_btn" />
 
     <ImageView
         android:id="@+id/post_image"
-        android:layout_width="138dp"
-        android:layout_height="97dp"
+        android:layout_width="211dp"
+        android:layout_height="192dp"
         android:layout_margin="24dp"
         android:background="#C6E3E6"
         android:backgroundTintMode="multiply"
         android:hapticFeedbackEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.09"
         app:srcCompat="@drawable/upload_img"
         tools:layout_editor_absoluteX="16dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="95dp"
-        android:layout_height="59dp"
-        android:orientation="vertical"
-        android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/login_login_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.587">
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/login_login_btn"
